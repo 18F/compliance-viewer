@@ -1,0 +1,9 @@
+<ul>
+  <% for version in versions %>
+    <li>
+      <a href="<%= base_name(version.key) %>/<%= version.id %>">
+        <%= version.last_modified %>
+      </a>
+    </li>
+  <% end %>
+</ul>
