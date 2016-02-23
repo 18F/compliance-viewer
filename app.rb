@@ -10,7 +10,7 @@ class ComplianceData < Sinatra::Base
 
   helpers do
     def authed?
-      session[:authenticated]
+      !session[:user_email].nil?
     end
   end
 
@@ -34,13 +34,8 @@ class ComplianceData < Sinatra::Base
   end
 
   get '/auth/myusa/callback' do
-    auth = env['omniauth.auth']
-    if auth
-      session[:user_email] = auth.info.email
-      session[:authenticated] = true
-    else
-      halt(401, 'Not Authorized')
-    end
+    halt(401, 'Not Authorized') unless env['omniauth.auth']
+    session[:user_email] = env['omniauth.auth'].info.email
     redirect '/'
   end
 

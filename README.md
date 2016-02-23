@@ -23,7 +23,7 @@ You can generate a good secret with:
 ruby -rsecurerandom -e "puts SecureRandom.hex(32)"
 ```
 
-Run the application with `rackup`
+Run the application with `rackup`.
 
 ### On Cloud.gov
 
