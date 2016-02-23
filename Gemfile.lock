@@ -16,6 +16,7 @@ GEM
     aws-sdk-resources (2.2.15)
       aws-sdk-core (= 2.2.15)
     backports (3.6.8)
+    encrypted_cookie (0.0.4)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
     hashie (3.4.3)
@@ -65,6 +66,7 @@ PLATFORMS
 
 DEPENDENCIES
   aws-sdk
+  encrypted_cookie
   omniauth
   omniauth-myusa!
   sinatra

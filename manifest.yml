@@ -5,4 +5,4 @@ applications:
   instances: 1
   domain: 18f.gov
   host: compliance-viewer
-  command: null
+  command: rackup -p $PORT -E production 

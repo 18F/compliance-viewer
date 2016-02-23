@@ -1,8 +1,14 @@
 require 'bundler/setup'
 require 'omniauth-myusa'
+require 'encrypted_cookie'
 require './app'
 
-use Rack::Session::Cookie, secret: ENV['COOKIE_SECRET'] 
+cookie_settings = {
+  secret: ENV['COOKIE_SECRET'],
+  httponly: true
+}
+use Rack::Session::EncryptedCookie, cookie_settings
+
 use OmniAuth::Builder do
   provider :myusa, ENV['APP_ID'], ENV['APP_SECRET'],
            scope: 'profile.email',

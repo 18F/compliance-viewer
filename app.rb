@@ -34,12 +34,22 @@ class ComplianceData < Sinatra::Base
   end
 
   get '/auth/myusa/callback' do
-    if env['omniauth.auth']
+    auth = env['omniauth.auth']
+    if auth
+      session[:user_email] = auth.info.email
       session[:authenticated] = true
     else
       halt(401, 'Not Authorized')
     end
     redirect '/'
+  end
+
+  get '/results' do
+    if authed?
+      erb :index, locals: { projects: key_list }
+    else
+      redirect '/auth/myusa'
+    end
   end
 
   get '/results/:name' do |name|
