@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/config_file'
+require 'sinatra/reloader'
 require 'aws-sdk'
 
 class ComplianceData < Sinatra::Base
@@ -7,9 +8,9 @@ class ComplianceData < Sinatra::Base
 
   config_file 'credentials.yml'
 
-  configure :production do
-    use Rack::Auth::Basic do |username, password|
-      username == settings.site_user && password == settings.site_password
+  helpers do
+    def authed?
+      !session[:user_email].nil?
     end
   end
 
@@ -25,16 +26,36 @@ class ComplianceData < Sinatra::Base
   end
 
   get '/' do
-    erb :index, locals: { projects: key_list }
+    if authed?
+      erb :index, locals: { projects: key_list }
+    else
+      redirect '/auth/myusa'
+    end
+  end
+
+  get '/auth/myusa/callback' do
+    halt(401, 'Not Authorized') unless env['omniauth.auth']
+    session[:user_email] = env['omniauth.auth'].info.email
+    redirect '/'
+  end
+
+  get '/results' do
+    if authed?
+      erb :index, locals: { projects: key_list }
+    else
+      redirect '/auth/myusa'
+    end
   end
 
   get '/results/:name' do |name|
+    halt(401, 'Not Authorized') unless authed?
     versions = get_version_list name
     'Invalid Project' if versions.count == 0
     erb :results, locals: { versions: versions }
   end
 
   get '/results/:name/:version' do |name, version|
+    halt(401, 'Not Authorized') unless authed?
     file_data = get_file(name, version)
     if file_data.nil?
       'Invalid Version'
