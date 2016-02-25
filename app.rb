@@ -50,31 +50,24 @@ class ComplianceData < Sinatra::Base
     erb :results, locals: { versions: versions }
   end
 
-  get '/results/:name/current' do |name|
-    file_data = get_file(name, nil)
-    if file_data.nil?
-      'Invalid Version'
-    else
-      erb :report, locals: { report_data: create_report(file_data) }
-    end
-  end
-
   get '/results/:name/:version' do |name, version|
+    version = nil if version == 'current'
     file_data = get_file(name, version)
-    if file_data.nil?
-      'Invalid Version'
-    else
+    if file_data
       erb :report, locals: { report_data: create_report(file_data) }
+    else
+      'Invalid Version'
     end
   end
 
   get '/results/:name/raw/:version' do |name, version|
+    version = nil if version == 'current'
     file_data = get_file(name, version)
-    if file_data.nil?
-      'Invalid Version'
-    else
+    if file_data
       attachment "#{name}#{settings.results_format}"
       file_data.body.string
+    else
+      'Invalid Version'
     end
   end
 
