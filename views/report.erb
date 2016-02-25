@@ -1,0 +1,102 @@
+<h1>ZAP Scanning Report</h1>
+
+<h2>Summary of Alerts</h2>
+
+<table width="45%" border="0">
+  <tbody>
+    <tr bgcolor="#666">
+      <td width="45%" height="24">
+        <strong><font color="#FFF">Risk Level</font></strong>
+      </td>
+      <td width="55%" align="center">
+        <strong><font color="#FFF">Number of Alerts</font></strong>
+      </td>
+    </tr>
+    <% for level, value in report_data['summary'] %>
+      <tr bgcolor="#e8e8e8">
+        <td width="45%" height="24"><%= level %></td>
+        <td width="55%" align="center"><%= value %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Alert Detail</h2>
+  <% for alert, alert_data in report_data['alerts'] %>
+    <table width="100%" border="0"><tbody>
+      <tr bgcolor="#666" height="24">
+        <td width="20%" valign="top">
+          <font color="#FFF">
+            <%= alert_data['risk'] %> (<%= alert_data['confidence'] %>)
+          </font>
+        </td>
+        <td width="80%">
+          <font color="#FFF"><%= alert %></font>
+        </td>
+      </tr>
+      <tr bgcolor="#e8e8e8" valign="top">
+        <td width="20%">Description</td>
+        <td width="80%"><%= alert_data['description'] %></td>
+      </tr>
+      <tr valign="top"><td colspan="2"></td></tr>
+      <% for instance in alert_data['instances'] %>
+        <tr bgcolor="#e8e8e8" valign="top">
+          <td width="20%"><blockquote><p>URL</p></blockquote></td>
+          <td width="80%"><p><%= instance['url'] %></p></td>
+        </tr>
+        <% unless instance['parameter'].nil? || instance['parameter'].empty? %>
+          <tr bgcolor="#e8e8e8" valign="top">
+            <td width="20%"><blockquote><p>&nbsp;&nbsp;&nbsp;Parameter</p></blockquote></td>
+            <td width="80%"><p><%= instance['parameter'] %></p></td>
+          </tr>
+        <% end %>
+        <% unless instance['attack'].nil? || instance['attack'].empty? %>
+          <tr bgcolor="#e8e8e8" valign="top">
+            <td width="20%"><blockquote><p>&nbsp;&nbsp;&nbsp;Attack</p></blockquote></td>
+            <td width="80%"><p><%= instance['attack'] %></p></td>
+          </tr>
+        <% end %>
+        <% unless instance['evidence'].nil? || instance['evidence'].empty? %>
+          <tr bgcolor="#e8e8e8" valign="top">
+            <td width="20%"><blockquote><p>&nbsp;&nbsp;&nbsp;Evidence</p></blockquote></td>
+            <td width="80%"><p><%= instance['evidence'] %></p></td>
+          </tr>
+        <% end %>
+      <% end %>
+      <tr bgcolor="#e8e8e8" valign="top">
+        <td width="20%">Instances</td>
+        <td width="80%"><%= alert_data['instances'].length %></td>
+      </tr>
+      <% unless alert_data['solution'].nil? || alert_data['solution'].empty? %>
+        <tr bgcolor="#e8e8e8" valign="top">
+          <td width="20%">Solution</td>
+          <td width="80%"><%= alert_data['solution'] %></td>
+        </tr>
+      <% end %>
+      <% unless alert_data['other'].nil? || alert_data['other'].empty? %>
+        <tr bgcolor="#e8e8e8" valign="top">
+          <td width="20%">Other information</td>
+          <td width="80%"><%= alert_data['other'] %></td>
+        </tr>
+      <% end %>
+      <% unless alert_data['reference'].nil? || alert_data['reference'].empty? %>
+        <tr bgcolor="#e8e8e8" valign="top">
+          <td width="20%">Reference</td>
+          <td width="80%"><%= alert_data['reference'] %></td>
+        </tr>
+      <% end %>
+      <% unless alert_data['cweid'].nil? || alert_data['cweid'].empty? || alert_data['cweid'] == '0' %>
+        <tr bgcolor="#e8e8e8" valign="top">
+          <td width="20%">CWE Id</td>
+          <td width="80%"><%= alert_data['cweid'] %></td>
+        </tr>
+      <% end %>
+      <% unless alert_data['wascid'].nil? || alert_data['wascid'].empty? || alert_data['wascid'] == '0' %>
+        <tr bgcolor="#e8e8e8" valign="top">
+          <td width="20%">WASC Id</td>
+          <td width="80%"><%= alert_data['wascid'] %></td>
+        </tr>
+      <% end %>
+    </tbody></table>
+    <p></p>
+  <% end %>
