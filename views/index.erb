@@ -1,9 +1,6 @@
-<ul>
-  <% for project in projects %>
-    <li>
-      <a href="results/<%= project %>">
-        <%= project %>
-      </a>
-    </li>
-  <% end %>
-</ul>
+<h1>Projects</h1>
+<% for project in projects %>
+  <h2><%= project %></h2>
+  <p><a href="results/<%= project %>/current">View Latest Scan</a></p>
+  <p><a href="results/<%= project %>">History</a></p>
+<% end %>

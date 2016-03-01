@@ -2,9 +2,12 @@ require 'sinatra/base'
 require 'sinatra/config_file'
 require 'sinatra/reloader'
 require 'aws-sdk'
+require 'json'
+require_relative 'lib/zap_report'
 
 class ComplianceData < Sinatra::Base
   register Sinatra::ConfigFile
+  include ZapReport
 
   config_file 'credentials.yml'
 
@@ -25,43 +28,42 @@ class ComplianceData < Sinatra::Base
     @bucket = @s3.bucket(settings.aws_bucket)
   end
 
-  get '/' do
-    if authed?
-      erb :index, locals: { projects: key_list }
-    else
-      redirect '/auth/myusa'
-    end
-  end
-
   get '/auth/myusa/callback' do
     halt(401, 'Not Authorized') unless env['omniauth.auth']
     session[:user_email] = env['omniauth.auth'].info.email
     redirect '/'
   end
 
+  before %r{^(?!\/auth)} do
+    redirect '/auth/myusa' unless authed?
+  end
+
+  get '/' do
+    erb :index, locals: { projects: key_list }
+  end
+
   get '/results' do
-    if authed?
-      erb :index, locals: { projects: key_list }
-    else
-      redirect '/auth/myusa'
-    end
+    erb :index, locals: { projects: key_list }
   end
 
   get '/results/:name' do |name|
-    halt(401, 'Not Authorized') unless authed?
     versions = get_version_list name
     'Invalid Project' if versions.count == 0
     erb :results, locals: { versions: versions }
   end
 
   get '/results/:name/:version' do |name, version|
-    halt(401, 'Not Authorized') unless authed?
+    version = nil if version == 'current'
     file_data = get_file(name, version)
-    if file_data.nil?
-      'Invalid Version'
+    if file_data
+      if params['format'] == 'json'
+        attachment "#{name}#{settings.results_format}"
+        file_data.body.string
+      else
+        erb :report, locals: { report_data: ZapReport.create_report(file_data) }
+      end
     else
-      attachment "#{name}#{settings.results_format}"
-      file_data.body.string
+      'Invalid Version'
     end
   end
 
@@ -89,10 +91,10 @@ class ComplianceData < Sinatra::Base
     file_data = nil
     begin
       file_data = @bucket.object(full_name(name)).get(version_id: version)
-    rescue Aws::S3::Errors::InvalidArgument => msg
-      puts msg
-    rescue Aws::S3::Errors::NoSuchVersion => msg
-      puts msg
+    rescue Aws::S3::Errors::InvalidArgument,
+           Aws::S3::Errors::NoSuchVersion,
+           Aws::S3::Errors::NoSuchKey
+      puts 'Unable to find file'
     end
     file_data
   end

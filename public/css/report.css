@@ -1,0 +1,68 @@
+tr {
+  background-color: #e8e8e8;
+}
+
+td, th {
+  height: 24px;
+}
+
+tr.empty {
+  background-color: white;
+}
+
+tr.empty td {
+  height: 2px;
+}
+
+th {
+  color: white;
+  background-color: #666;
+  font-weight: bold;
+}
+
+table {
+  border: 0;
+}
+
+table.zap-summary {
+  width: 45%;
+}
+
+table.zap-summary td,
+table.zap-summary th {
+  width: 55%;
+  text-align: center;
+}
+
+table.zap-summary td:first-child,
+table.zap-summary th:first-child {
+  width: 45%;
+  text-align: left;
+}
+
+table.zap-alerts {
+  width: 100%;
+}
+
+table.zap-alerts td,
+table.zap-alerts th {
+  width: 80%;
+  vertical-align: top;
+}
+
+table.zap-alerts td:first-child,
+table.zap-alerts th:first-child {
+  width: 20%;
+}
+
+p.first-indent {
+  margin-top: .2em;
+  margin-left: 2em;
+  height: 30px;
+}
+
+p.second-indent {
+  margin-top: .2em;
+  margin-left: 3em;
+  height: 30px;
+}

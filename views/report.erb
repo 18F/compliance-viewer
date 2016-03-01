@@ -1,0 +1,93 @@
+<link href="../../css/report.css" rel="stylesheet" />
+<h1>ZAP Scanning Report</h1>
+
+<h2>Summary of Alerts</h2>
+
+<table class="zap-summary">
+  <tbody>
+    <tr>
+      <th>Risk Level</th>
+      <th>Number of Alerts</th>
+    </tr>
+    <% for level, value in report_data['summary'] %>
+      <tr>
+        <td><%= level %></td>
+        <td><%= value %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Alert Detail</h2>
+  <% for alert, alert_data in report_data['alerts'] %>
+    <table class="zap-alerts"><tbody>
+      <tr>
+        <th><%= alert_data['risk'] %> (<%= alert_data['confidence'] %>)</th>
+        <th><%= alert %></th>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td><%= alert_data['description'] %></td>
+      </tr>
+      <tr class="empty"><td colspan="2"></td></tr>
+      <% for instance in alert_data['instances'] %>
+        <tr>
+          <td><p class="first-indent">URL</p></td>
+          <td><p><%= instance['url'] %></p></td>
+        </tr>
+        <% unless instance['parameter'].nil? || instance['parameter'].empty? %>
+          <tr>
+            <td><p class="second-indent">Parameter</p></td>
+            <td><p><%= instance['parameter'] %></p></td>
+          </tr>
+        <% end %>
+        <% unless instance['attack'].nil? || instance['attack'].empty? %>
+          <tr>
+            <td><p class="second-indent">Attack</p></td>
+            <td><p><%= instance['attack'] %></p></td>
+          </tr>
+        <% end %>
+        <% unless instance['evidence'].nil? || instance['evidence'].empty? %>
+          <tr>
+            <td><p class="second-indent">Evidence</p></td>
+            <td><p><%= instance['evidence'] %></p></td>
+          </tr>
+        <% end %>
+      <% end %>
+      <tr>
+        <td>Instances</td>
+        <td><%= alert_data['instances'].length %></td>
+      </tr>
+      <% unless alert_data['solution'].nil? || alert_data['solution'].empty? %>
+        <tr>
+          <td>Solution</td>
+          <td><%= alert_data['solution'] %></td>
+        </tr>
+      <% end %>
+      <% unless alert_data['other'].nil? || alert_data['other'].empty? %>
+        <tr>
+          <td>Other information</td>
+          <td><%= alert_data['other'] %></td
+        </tr>
+      <% end %>
+      <% unless alert_data['reference'].nil? || alert_data['reference'].empty? %>
+        <tr>
+          <td>Reference</td>
+          <td><%= alert_data['reference'] %></td>
+        </tr>
+      <% end %>
+      <% unless alert_data['cweid'].nil? || alert_data['cweid'].empty? || alert_data['cweid'] == '0' %>
+        <tr>
+          <td>CWE Id</td>
+          <td><%= alert_data['cweid'] %></td>
+        </tr>
+      <% end %>
+      <% unless alert_data['wascid'].nil? || alert_data['wascid'].empty? || alert_data['wascid'] == '0' %>
+        <tr>
+          <td>WASC Id</td>
+          <td><%= alert_data['wascid'] %></td>
+        </tr>
+      <% end %>
+    </tbody></table>
+    <p></p>
+  <% end %>
