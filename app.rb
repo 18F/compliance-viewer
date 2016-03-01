@@ -3,9 +3,11 @@ require 'sinatra/config_file'
 require 'sinatra/reloader'
 require 'aws-sdk'
 require 'json'
+require_relative 'lib/zap_report'
 
 class ComplianceData < Sinatra::Base
   register Sinatra::ConfigFile
+  include ZapReport
 
   config_file 'credentials.yml'
 
@@ -54,18 +56,12 @@ class ComplianceData < Sinatra::Base
     version = nil if version == 'current'
     file_data = get_file(name, version)
     if file_data
-      erb :report, locals: { report_data: create_report(file_data) }
-    else
-      'Invalid Version'
-    end
-  end
-
-  get '/results/:name/raw/:version' do |name, version|
-    version = nil if version == 'current'
-    file_data = get_file(name, version)
-    if file_data
-      attachment "#{name}#{settings.results_format}"
-      file_data.body.string
+      if params['format'] == 'json'
+        attachment "#{name}#{settings.results_format}"
+        file_data.body.string
+      else
+        erb :report, locals: { report_data: ZapReport.create_report(file_data) }
+      end
     else
       'Invalid Version'
     end
@@ -101,52 +97,5 @@ class ComplianceData < Sinatra::Base
       puts 'Unable to find file'
     end
     file_data
-  end
-
-  def create_report(file_data)
-    report_data = {}
-    parsed_data = JSON.parse file_data.body.string
-    report_data['summary'] = create_report_summary parsed_data
-    report_data['alerts'] = create_report_alerts parsed_data
-    report_data
-  end
-
-  def create_report_alerts(file_data)
-    alerts = {}
-    file_data.each do |a|
-      alert = a['alert']
-      alerts[alert] = create_alert_record(a) unless alerts.key? alert
-      alerts[alert]['instances'] = [] unless alerts[alert].key? 'instances'
-      alerts[alert]['instances'].push create_alert_instance(a)
-    end
-    alerts
-  end
-
-  def create_alert_instance(alert_data)
-    {
-      'url' => alert_data['url'],
-      'parameter' => alert_data['param'],
-      'attack' => alert_data['attack'],
-      'evidence' => alert_data['evidence']
-    }
-  end
-
-  def create_alert_record(alert_data)
-    {
-      'risk' => alert_data['risk'],
-      'confidence' => alert_data['confidence'],
-      'description' => alert_data['description'],
-      'solution' => alert_data['solution'],
-      'other' => alert_data['other'],
-      'reference' => alert_data['reference'],
-      'cweid' => alert_data['cweid'],
-      'wascid' => alert_data['wascid']
-    }
-  end
-
-  def create_report_summary(file_data)
-    levels = Hash.new 0
-    file_data.each { |a| levels[a['risk']] += 1 }
-    levels
   end
 end

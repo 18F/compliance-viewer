@@ -4,6 +4,6 @@
     <a href="<%= base_name(version.key) %>/<%= version.id %>">
       <%= version.last_modified.strftime("%F at %T") %>
     </a>
-    <a href="<%= base_name(version.key) %>/raw/<%= version.id %>">(json)</a>, <%= version.size %> bytes
+    <a href="<%= base_name(version.key) %>/<%= version.id %>?format=json">(json)</a>, <%= version.size %> bytes
   </p>
 <% end %>
