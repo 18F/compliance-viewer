@@ -25,7 +25,7 @@ rescue LoadError
 end
 
 extend GoScript
-check_ruby_version '2.3.0'
+check_ruby_version '2.2.3'
 
 command_group :dev, 'Development commands'
 
