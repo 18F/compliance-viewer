@@ -15,3 +15,5 @@ group :test, :development do
   gem 'rubocop'
   gem 'go_script'
 end
+
+gem "codeclimate-test-reporter", group: :test, require: nil
