@@ -2,3 +2,6 @@ language: ruby
 rvm:
  - "2.2.3"
 script: ./go test
+addons:
+    code_climate:
+        repo_token: a018ae7537e034090a7cf7c74070b9a5ca39ce6760f858f3c3781ae2bad470d8
