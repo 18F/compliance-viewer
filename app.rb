@@ -1,11 +1,12 @@
 require 'sinatra/base'
 require 'sinatra/config_file'
 require 'sinatra/reloader'
-require 'aws-sdk'
 require 'json'
 require_relative 'lib/zap_report'
+require_relative 'lib/compliance_data'
 
-class ComplianceData < Sinatra::Base
+class ComplianceViewer < Sinatra::Base
+  attr_reader :compliance_data
   register Sinatra::ConfigFile
   include ZapReport
 
@@ -19,13 +20,7 @@ class ComplianceData < Sinatra::Base
 
   def initialize
     super
-    Aws.config.update(
-      region: settings.aws_region,
-      credentials: Aws::Credentials.new(settings.aws_access_key,
-                                        settings.aws_secret_key))
-
-    @s3 = Aws::S3::Resource.new
-    @bucket = @s3.bucket(settings.aws_bucket)
+    @compliance_data = ComplianceData.new settings
   end
 
   get '/auth/myusa/callback' do
@@ -39,63 +34,31 @@ class ComplianceData < Sinatra::Base
   end
 
   get '/' do
-    erb :index, locals: { projects: key_list }
+    erb :index, locals: { projects: compliance_data.key_list }
   end
 
   get '/results' do
-    erb :index, locals: { projects: key_list }
+    erb :index, locals: { projects: compliance_data.key_list }
   end
 
   get '/results/:name' do |name|
-    versions = get_version_list name
+    versions = compliance_data.get_version_list name
     'Invalid Project' if versions.count == 0
     erb :results, locals: { versions: versions }
   end
 
   get '/results/:name/:version' do |name, version|
     version = nil if version == 'current'
-    file_data = get_file(name, version)
+    file_data = compliance_data.get_file(name, version)
     if file_data
       if params['format'] == 'json'
         attachment "#{name}#{settings.results_format}"
-        file_data.body.string
+        compliance_data.get_json file_data
       else
         erb :report, locals: { report_data: ZapReport.create_report(file_data) }
       end
     else
       'Invalid Version'
     end
-  end
-
-  def base_name(full_name)
-    File.basename full_name, settings.results_format
-  end
-
-  def full_name(base_name)
-    "#{settings.results_folder}/#{base_name}#{settings.results_format}"
-  end
-
-  def key_list
-    projects = []
-    @bucket.objects(prefix: settings.results_folder).each do |project|
-      projects.push base_name(project.key)
-    end
-    projects
-  end
-
-  def get_version_list(name)
-    @bucket.object_versions(prefix: full_name(name))
-  end
-
-  def get_file(name, version)
-    file_data = nil
-    begin
-      file_data = @bucket.object(full_name(name)).get(version_id: version)
-    rescue Aws::S3::Errors::InvalidArgument,
-           Aws::S3::Errors::NoSuchVersion,
-           Aws::S3::Errors::NoSuchKey
-      puts 'Unable to find file'
-    end
-    file_data
   end
 end

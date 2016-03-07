@@ -18,4 +18,4 @@ use OmniAuth::Builder do
            }
 end
 
-run ComplianceData
+run ComplianceViewer

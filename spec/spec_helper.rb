@@ -20,6 +20,11 @@
 require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start
 
+if ENV['RAILS_ENV'] == 'development'
+  require 'simplecov'
+  SimpleCov.start
+end
+
 require_relative '../app'
 require_relative '../lib/zap_report'
 

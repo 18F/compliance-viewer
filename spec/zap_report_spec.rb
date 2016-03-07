@@ -21,9 +21,39 @@ describe ZapReport do
     }
   end
 
+  class StubBody
+    def initialize(alerts = [])
+      @alerts = alerts
+    end
+
+    def string
+      @alerts.to_json
+    end
+  end
+
+  class StubFile
+    attr_reader :body
+    def initialize(alerts = [])
+      @body = StubBody.new(alerts)
+    end
+  end
+
   describe 'create_report' do
     it 'returns the right thing' do
-      expect(false).to eq true
+      alert_record2 = alert_record.clone
+      alert_record2['alert'] = 'abc'
+      alert_report = ZapReport.create_report(
+        StubFile.new([alert_record, alert_record2]))
+      alert_output = alert_report['alerts']
+      expect(alert_report['summary']['Low']).to eq 2
+      expect(alert_output.length).to eq 2
+      expect(alert_output[alert_record['alert']]['instances'].length).to eq 1
+      expect(alert_output[alert_record2['alert']]['instances'].length).to eq 1
+      expect(alert_report['alerts'].length).to eq 2
+    end
+
+    it 'does not error with nil' do
+      expect(ZapReport.create_report(nil)).to eq nil
     end
   end
 
@@ -47,7 +77,7 @@ describe ZapReport do
     end
 
     it 'works with nil' do
-      alert_report = ZapReport.create_report_alerts nil 
+      alert_report = ZapReport.create_report_alerts nil
       expect(alert_report.length).to eq 0
     end
   end

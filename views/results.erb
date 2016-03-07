@@ -1,9 +1,9 @@
-<h1><%= base_name(versions.first.key) %> history</h1>
+<h1><%= compliance_data.base_name(versions.first.key) %> history</h1>
 <% for version in versions %>
   <p>
-    <a href="<%= base_name(version.key) %>/<%= version.id %>">
+    <a href="<%= compliance_data.base_name(version.key) %>/<%= version.id %>">
       <%= version.last_modified.strftime("%F at %T") %>
     </a>
-    <a href="<%= base_name(version.key) %>/<%= version.id %>?format=json">(json)</a>, <%= version.size %> bytes
+    <a href="<%= compliance_data.base_name(version.key) %>/<%= version.id %>?format=json">(json)</a>, <%= version.size %> bytes
   </p>
 <% end %>

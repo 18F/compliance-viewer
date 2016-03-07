@@ -1,5 +1,6 @@
 module ZapReport
   def self.create_report(file_data)
+    return nil if file_data.nil?
     report_data = {}
     parsed_data = JSON.parse file_data.body.string
     report_data['summary'] = create_report_summary parsed_data
