@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'stub_classes'
 
 describe ZapReport do
   def alert_record
@@ -21,29 +22,12 @@ describe ZapReport do
     }
   end
 
-  class StubBody
-    def initialize(alerts = [])
-      @alerts = alerts
-    end
-
-    def string
-      @alerts.to_json
-    end
-  end
-
-  class StubFile
-    attr_reader :body
-    def initialize(alerts = [])
-      @body = StubBody.new(alerts)
-    end
-  end
-
   describe 'create_report' do
     it 'returns the right thing' do
       alert_record2 = alert_record.clone
       alert_record2['alert'] = 'abc'
       alert_report = ZapReport.create_report(
-        StubFile.new([alert_record, alert_record2]))
+        StubClasses::StubFile.new([alert_record, alert_record2]))
       alert_output = alert_report['alerts']
       expect(alert_report['summary']['Low']).to eq 2
       expect(alert_output.length).to eq 2
