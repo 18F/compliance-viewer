@@ -31,7 +31,7 @@ Run the application with `rackup`.
 
 ### On Cloud.gov
 
-Compliance Viewer is deployed to cloud.gov.
+The 18F instance of Compliance Viewer is deployed to cloud.gov in the `cf` organization and `toolkit` space.
 
 After doing a `cf push`, you will need to run:
 ```
