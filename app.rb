@@ -34,26 +34,26 @@ class ComplianceViewer < Sinatra::Base
   end
 
   get '/' do
-    erb :index, locals: { projects: compliance_data.key_list }
+    erb :index, locals: { projects: compliance_data.keys }
   end
 
   get '/results' do
-    erb :index, locals: { projects: compliance_data.key_list }
+    erb :index, locals: { projects: compliance_data.keys }
   end
 
   get '/results/:name' do |name|
-    versions = compliance_data.get_version_list name
+    versions = compliance_data.versions name
     'Invalid Project' if versions.count == 0
     erb :results, locals: { versions: versions }
   end
 
   get '/results/:name/:version' do |name, version|
     version = nil if version == 'current'
-    file_data = compliance_data.get_file(name, version)
+    file_data = compliance_data.file_for(name, version)
     if file_data
       if params['format'] == 'json'
         attachment "#{name}#{settings.results_format}"
-        compliance_data.get_json file_data
+        compliance_data.json_for file_data
       else
         erb :report, locals: { report_data: ZapReport.create_report(file_data) }
       end

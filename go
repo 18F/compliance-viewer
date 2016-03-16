@@ -36,10 +36,6 @@ def_command :update_gems, 'Update Ruby gems' do |gems|
   update_gems gems
 end
 
-def_command :update_js, 'Update JavaScript components' do
-  update_node_modules
-end
-
 def_command :test, 'Execute automated tests' do |args|
   exec_cmd "bundle exec rspec #{args.join ' '}"
 end

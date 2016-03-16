@@ -1,7 +1,7 @@
 require 'aws-sdk'
 
 class ComplianceData
-  attr_reader :bucket
+  attr_reader :bucket, :settings
 
   def initialize(settings)
     raise ArgumentError if settings.nil?
@@ -22,19 +22,18 @@ class ComplianceData
     "#{@settings.results_folder}/#{base_name}#{@settings.results_format}"
   end
 
-  def key_list
-    projects = []
-    (@bucket.objects(prefix: @settings.results_folder) || []).each do |project|
-      projects.push base_name(project.key)
+  def keys
+    projects = @bucket.objects(prefix: @settings.results_folder) || []
+    projects.map do |project|
+      base_name(project.key)
     end
-    projects
   end
 
-  def get_version_list(name)
+  def versions(name)
     @bucket.object_versions(prefix: full_name(name))
   end
 
-  def get_file(name, version)
+  def file_for(name, version)
     file_data = nil
     begin
       file_data = @bucket.object(full_name(name)).get(version_id: version)
@@ -46,7 +45,7 @@ class ComplianceData
     file_data
   end
 
-  def get_json(file_data)
+  def json_for(file_data)
     if file_data.nil?
       nil
     else
