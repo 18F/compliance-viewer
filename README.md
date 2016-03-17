@@ -2,7 +2,7 @@
 
 A small application to access scan results stored in S3.
 
-[![Build Status](https://travis-ci.org/18F/compliance-viewer.svg?branch=master)](https://travis-ci.org/18F/compliance-viewer)
+[![Build Status](https://travis-ci.org/18F/compliance-viewer.svg?branch=develop)](https://travis-ci.org/18F/compliance-viewer)
 [![Dependency Status](https://gemnasium.com/18F/compliance-viewer.svg)](https://gemnasium.com/18F/compliance-viewer)
 [![Code Climate](https://codeclimate.com/github/18F/compliance-viewer/badges/gpa.svg)](https://codeclimate.com/github/18F/compliance-viewer)
 [![Test Coverage](https://codeclimate.com/github/18F/compliance-viewer/badges/coverage.svg)](https://codeclimate.com/github/18F/compliance-viewer/coverage)
