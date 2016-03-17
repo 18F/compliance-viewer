@@ -16,40 +16,40 @@ describe ComplianceData do
 
   describe '#base_name' do
     it 'returns correct output if given good input' do
-      @data = ComplianceData.new StubClasses::StubSettings
-      base = @data.base_name 'path/to/file.json'
+      data = ComplianceData.new StubClasses::StubSettings
+      base = data.base_name 'path/to/file.json'
       expect(base).to eq 'file'
     end
 
     it 'handles a missing extension' do
-      @data = ComplianceData.new StubClasses::StubSettings
-      base = @data.base_name 'path/to/file'
+      data = ComplianceData.new StubClasses::StubSettings
+      base = data.base_name 'path/to/file'
       expect(base).to eq 'file'
     end
 
     it 'handles a base name' do
-      @data = ComplianceData.new StubClasses::StubSettings
-      base = @data.base_name 'file'
+      data = ComplianceData.new StubClasses::StubSettings
+      base = data.base_name 'file'
       expect(base).to eq 'file'
     end
 
     it 'returns empty string if passed nil' do
-      @data = ComplianceData.new StubClasses::StubSettings
-      base = @data.base_name nil
+      data = ComplianceData.new StubClasses::StubSettings
+      base = data.base_name nil
       expect(base).to eq ''
     end
   end
 
   describe '#full_name' do
     it 'returns correct output if given good input' do
-      @data = ComplianceData.new StubClasses::StubSettings
-      full = @data.full_name 'file'
+      data = ComplianceData.new StubClasses::StubSettings
+      full = data.full_name 'file'
       expect(full).to eq 'results/file.json'
     end
 
     it 'returns an empty string if passed nil' do
-      @data = ComplianceData.new StubClasses::StubSettings
-      full = @data.full_name nil
+      data = ComplianceData.new StubClasses::StubSettings
+      full = data.full_name nil
       expect(full).to eq ''
     end
   end
@@ -63,8 +63,8 @@ describe ComplianceData do
     end
 
     it 'retrieves correct output if given good input' do
-      @data = ComplianceData.new StubClasses::StubSettings
-      expect(@data.bucket).to receive(:objects)
+      data = ComplianceData.new StubClasses::StubSettings
+      expect(data.bucket).to receive(:objects)
         .and_return(
           [
             StubObjectSummary.new(
@@ -72,24 +72,24 @@ describe ComplianceData do
             StubObjectSummary.new(
               "#{StubClasses::StubSettings.results_folder}/bcd")
           ])
-      projects = @data.keys
+      projects = data.keys
       expect(projects).to eq %w(abc bcd)
     end
 
     it 'returns an empty list if no results returned from AWS' do
-      @data = ComplianceData.new StubClasses::StubSettings
-      expect(@data.bucket).to receive(:objects).and_return(nil)
-      projects = @data.keys
+      data = ComplianceData.new StubClasses::StubSettings
+      expect(data.bucket).to receive(:objects).and_return(nil)
+      projects = data.keys
       expect(projects).to eq []
     end
   end
 
   describe '#versions' do
     it 'retrieves the correct output, if given good input' do
-      @data = ComplianceData.new StubClasses::StubSettings
-      expect(@data.bucket).to receive(:object_versions)
+      data = ComplianceData.new StubClasses::StubSettings
+      expect(data.bucket).to receive(:object_versions)
         .and_return(%w(abc bcd))
-      projects = @data.versions 'test'
+      projects = data.versions 'test'
       expect(projects).to eq %w(abc bcd)
     end
   end
@@ -102,8 +102,8 @@ describe ComplianceData do
           get_object: { body: body_value }
         }
       }
-      @data = ComplianceData.new StubClasses::StubSettings
-      file = @data.file_for 'name', 'version'
+      data = ComplianceData.new StubClasses::StubSettings
+      file = data.file_for 'name', 'version'
       expect(file.body.string).to eq body_value
     end
 
@@ -114,22 +114,22 @@ describe ComplianceData do
           get_object: { body: body_value }
         }
       }
-      @data = ComplianceData.new StubClasses::StubSettings
-      file = @data.file_for 'name', nil
+      data = ComplianceData.new StubClasses::StubSettings
+      file = data.file_for 'name', nil
       expect(file.body.string).to eq body_value
     end
   end
 
   describe '#json_for' do
     it 'retrieves the expected json if given good input' do
-      @data = ComplianceData.new StubClasses::StubSettings
+      data = ComplianceData.new StubClasses::StubSettings
       file = StubClasses::StubFile.new('data' => 'abc')
-      expect(@data.json_for(file)).to eq '{"data":"abc"}'
+      expect(data.json_for(file)).to eq '{"data":"abc"}'
     end
 
     it 'returns nil if nil passed in' do
-      @data = ComplianceData.new StubClasses::StubSettings
-      expect(@data.json_for(nil)).to eq nil
+      data = ComplianceData.new StubClasses::StubSettings
+      expect(data.json_for(nil)).to eq nil
     end
   end
 end
