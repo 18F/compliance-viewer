@@ -1,5 +1,6 @@
 module ZapReport
   def self.create_report(file_data)
+    return nil if file_data.nil?
     report_data = {}
     parsed_data = JSON.parse file_data.body.string
     report_data['summary'] = create_report_summary parsed_data
@@ -9,7 +10,7 @@ module ZapReport
 
   def self.create_report_alerts(file_data)
     alerts = {}
-    file_data.each do |a|
+    (file_data || []).each do |a|
       alert = a['alert']
       alerts[alert] = create_alert_record(a) unless alerts.key? alert
       alerts[alert]['instances'] = [] unless alerts[alert].key? 'instances'
@@ -42,7 +43,7 @@ module ZapReport
 
   def self.create_report_summary(file_data)
     levels = Hash.new 0
-    file_data.each { |a| levels[a['risk']] += 1 }
+    (file_data || []).each { |a| levels[a['risk']] += 1 }
     levels
   end
 end

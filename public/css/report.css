@@ -55,13 +55,13 @@ table.zap-alerts th:first-child {
   width: 20%;
 }
 
-p.first-indent {
+.first-indent {
   margin-top: .2em;
   margin-left: 2em;
   height: 30px;
 }
 
-p.second-indent {
+.second-indent {
   margin-top: .2em;
   margin-left: 3em;
   height: 30px;
