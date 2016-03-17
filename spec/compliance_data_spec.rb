@@ -6,7 +6,6 @@ describe ComplianceData do
     it 'returns a correctly constructed ComplianceData' do
       data = ComplianceData.new StubClasses::StubSettings
       expect(data).to be_an_instance_of ComplianceData
-      expect(data.bucket.name).to eq StubClasses::StubSettings.aws_bucket 
       expect(data.settings).to eq StubClasses::StubSettings
     end
 
@@ -16,8 +15,6 @@ describe ComplianceData do
   end
 
   describe '#base_name' do
-    @data = nil
-
     it 'returns correct output if given good input' do
       @data = ComplianceData.new StubClasses::StubSettings
       base = @data.base_name 'path/to/file.json'
@@ -44,8 +41,6 @@ describe ComplianceData do
   end
 
   describe '#full_name' do
-    @data = nil
-
     it 'returns correct output if given good input' do
       @data = ComplianceData.new StubClasses::StubSettings
       full = @data.full_name 'file'
@@ -60,8 +55,6 @@ describe ComplianceData do
   end
 
   describe '#keys' do
-    @data = nil
-
     class StubObjectSummary
       attr_reader :key
       def initialize(key_value)
@@ -71,7 +64,7 @@ describe ComplianceData do
 
     it 'retrieves correct output if given good input' do
       @data = ComplianceData.new StubClasses::StubSettings
-      allow_any_instance_of(Aws::S3::Bucket).to receive(:objects)
+      expect(@data.bucket).to receive(:objects)
         .and_return(
           [
             StubObjectSummary.new(
@@ -80,25 +73,21 @@ describe ComplianceData do
               "#{StubClasses::StubSettings.results_folder}/bcd")
           ])
       projects = @data.keys
-      expect(projects[0]).to eq 'abc'
-      expect(projects[1]).to eq 'bcd'
+      expect(projects).to eq %w(abc bcd)
     end
 
     it 'returns an empty list if no results returned from AWS' do
       @data = ComplianceData.new StubClasses::StubSettings
-      allow_any_instance_of(Aws::S3::Bucket).to receive(:objects)
-        .and_return(nil)
+      expect(@data.bucket).to receive(:objects).and_return(nil)
       projects = @data.keys
       expect(projects).to eq []
     end
   end
 
   describe '#versions' do
-    @data = nil
-
     it 'retrieves the correct output, if given good input' do
       @data = ComplianceData.new StubClasses::StubSettings
-      allow_any_instance_of(Aws::S3::Bucket).to receive(:object_versions)
+      expect(@data.bucket).to receive(:object_versions)
         .and_return(%w(abc bcd))
       projects = @data.versions 'test'
       expect(projects).to eq %w(abc bcd)
@@ -106,38 +95,32 @@ describe ComplianceData do
   end
 
   describe '#file_for' do
-    @data = nil
-
     it 'retrieves the correct output, if given the correct input' do
+      body_value = "test#{rand(100)}"
+      Aws.config[:s3] = {
+        stub_responses: {
+          get_object: { body: body_value }
+        }
+      }
       @data = ComplianceData.new StubClasses::StubSettings
-      allow_any_instance_of(Aws::S3::Bucket).to receive(:object)
-        .and_return(Aws::S3::Object.new(
-                      bucket_name: StubClasses::StubSettings.aws_bucket,
-                      key: 'abc'))
-      allow_any_instance_of(Aws::S3::Object).to receive(:get)
-        .and_return('abc')
-
       file = @data.file_for 'name', 'version'
-      expect(file).to eq 'abc'
+      expect(file.body.string).to eq body_value
     end
 
     it 'retrieves expected info if given correct input with no version' do
+      body_value = "test#{rand(100)}"
+      Aws.config[:s3] = {
+        stub_responses: {
+          get_object: { body: body_value }
+        }
+      }
       @data = ComplianceData.new StubClasses::StubSettings
-      allow_any_instance_of(Aws::S3::Bucket).to receive(:object)
-        .and_return(Aws::S3::Object.new(
-                      bucket_name: StubClasses::StubSettings.aws_bucket,
-                      key: 'abc'))
-      allow_any_instance_of(Aws::S3::Object).to receive(:get)
-        .and_return('abc')
-
       file = @data.file_for 'name', nil
-      expect(file).to eq 'abc'
+      expect(file.body.string).to eq body_value
     end
   end
 
   describe '#json_for' do
-    @data = nil
-
     it 'retrieves the expected json if given good input' do
       @data = ComplianceData.new StubClasses::StubSettings
       file = StubClasses::StubFile.new('data' => 'abc')

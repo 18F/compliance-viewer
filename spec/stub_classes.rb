@@ -30,7 +30,7 @@ module StubClasses
     end
 
     def self.aws_bucket
-      'bucket'
+      "bucket#{rand(100)}"
     end
 
     def self.results_format
