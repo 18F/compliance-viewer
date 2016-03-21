@@ -34,7 +34,40 @@ Run the application with `rackup`.
 
 The 18F instance of Compliance Viewer is deployed to cloud.gov in the `cf` organization and `toolkit` space.
 
-After doing a `cf push`, you will need to run:
+Compliance Viewer currently uses an s3 bucket provided by cloud.gov. After pushing the application, you can create the s3 bucket with:
+```
+cf create-service s3 basic s3-compliance-toolkit
+cf bind-service compliance-viewer s3-compliance-toolkit
+cf env compliance-viewer
+```
+
+The `cf env` command will return the environment for `compliance-viewer`, including the information for the newly created bucket:
+```
+"s3": [
+  {
+    "credentials": {
+     "access_key_id": "ACCESS_KEY",
+     "bucket": "BUCKET_NAME",
+     "secret_access_key": "SECRET_KEY",
+     "username": "USERNAME"
+  },
+...
+```
+
+You can update your credentials file with the first three pieces of information, and then re-push the app with `cf push`.
+
+Alternatively, you can use an S3 bucket created directly via AWS.
+
+Compliance Viewer relies on S3 bucket versioning. It can be enabled via:
+```
+aws s3api put-bucket-versioning --bucket BUCKET_NAME --versioning-configuration Status=Enabled
+```
+or checked via:
+```
+aws s3api get-bucket-versioning --bucket BUCKET_NAME 
+```
+
+To use MyUSA for authentication, you need to run:
 ```
 cf set-env app-name APP_ID your_myusa_public_key
 cf set-env app-name APP_SECRET your_myusa_secret_key

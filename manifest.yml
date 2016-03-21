@@ -5,4 +5,6 @@ applications:
   instances: 1
   domain: 18f.gov
   host: compliance-viewer
+  services:
+    - s3-compliance-toolkit 
   command: rackup -p $PORT -E production 
