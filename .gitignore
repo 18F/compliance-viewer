@@ -1,1 +1,3 @@
 credentials.yml
+config/development.yml
+config/production.yml

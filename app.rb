@@ -10,16 +10,7 @@ class ComplianceViewer < Sinatra::Base
   register Sinatra::ConfigFile
   include ZapReport
 
-  if settings.environment == :test
-    set :aws_region, 'region'
-    set :aws_access_key, 'key'
-    set :aws_secret_key, 'secret'
-    set :aws_bucket, 'bucket'
-    set :results_folder, 'results'
-    set :results_format, '.json'
-  else
-    config_file 'credentials.yml'
-  end
+  config_file "config/#{settings.environment}.yml"
 
   helpers do
     def authed?
