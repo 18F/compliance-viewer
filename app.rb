@@ -10,7 +10,16 @@ class ComplianceViewer < Sinatra::Base
   register Sinatra::ConfigFile
   include ZapReport
 
-  config_file 'credentials.yml'
+  if settings.environment == :test
+    set :aws_region, 'region'
+    set :aws_access_key, 'key'
+    set :aws_secret_key, 'secret'
+    set :aws_bucket, 'bucket'
+    set :results_folder, 'results'
+    set :results_format, '.json'
+  else
+    config_file 'credentials.yml'
+  end
 
   helpers do
     def authed?
@@ -18,9 +27,9 @@ class ComplianceViewer < Sinatra::Base
     end
   end
 
-  def initialize
+  def initialize(data = ComplianceData.new(settings))
     super
-    @compliance_data = ComplianceData.new settings
+    @compliance_data = data
   end
 
   get '/auth/myusa/callback' do
@@ -43,7 +52,7 @@ class ComplianceViewer < Sinatra::Base
 
   get '/results/:name' do |name|
     versions = compliance_data.versions name
-    'Invalid Project' if versions.count == 0
+    return 'Invalid Project' if versions.count == 0
     erb :results, locals: { versions: versions }
   end
 

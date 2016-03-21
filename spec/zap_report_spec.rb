@@ -82,8 +82,7 @@ describe ZapReport do
   describe 'create_alert_record' do
     it 'returns the right fields' do
       trimmed_alert = ZapReport.create_alert_record alert_record
-      ['risk', 'confidence', 'description', 'solution', 'other',
-       'reference', 'cweid', 'wascid'].each do |val|
+      %w(risk confidence description solution other reference cweid wascid).each do |val|
         expect(trimmed_alert[val]).to eq alert_record[val]
       end
       %w(messageId id).each do |val|
