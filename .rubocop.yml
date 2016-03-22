@@ -1,2 +1,2 @@
 inherit_from:
-- https://raw.githubusercontent.com/18F/concourse-compliance-testing/rubocop-config/.rubocop.yml
+- https://raw.githubusercontent.com/18F/concourse-compliance-testing/master/.rubocop.yml
