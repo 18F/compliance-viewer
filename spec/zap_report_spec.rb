@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'stub_classes'
 
 describe ZapReport do
+  # rubocop:disable Metrics/MethodLength
   def alert_record
     {
       'confidence' => 'Medium',
@@ -21,6 +22,7 @@ describe ZapReport do
       'description' => 'The page at the following URL ...'
     }
   end
+  # rubocop:enable Metrics/MethodLength
 
   describe 'create_report' do
     it 'returns the right thing' do

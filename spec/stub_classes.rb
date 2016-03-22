@@ -58,31 +58,4 @@ module StubClasses
       'results'
     end
   end
-
-  class ComplianceDataStub
-    def keys
-      %w(abc bcd)
-    end
-
-    def versions(name)
-      if name == 'good'
-        [
-          StubClasses::StubObjectVersion.new(name),
-          StubClasses::StubObjectVersion.new(name),
-          StubClasses::StubObjectVersion.new(name)
-        ]
-      else
-        []
-      end
-    end
-
-    def base_name(name)
-      name
-    end
-
-    def file_for(_name, version)
-      return StubClasses::StubFile.new if version == 'good'
-      nil
-    end
-  end
 end
