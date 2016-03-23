@@ -15,6 +15,7 @@ group :test, :development do
   gem 'rubocop'
   gem 'go_script'
   gem 'simplecov'
+  gem 'mocha'
 end
 
 gem 'codeclimate-test-reporter', group: :test, require: nil

@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/18F/omniauth-myusa.git
-  revision: 4ff01581d89bedb77fb7eb051ff9dd45535250a4
+  revision: 1c65ae77d2eafa1721a5eb6f536f833dbf065d67
   specs:
     omniauth-myusa (0.0.4)
       omniauth (~> 1.0)
@@ -10,12 +10,12 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.2.0)
-    aws-sdk (2.2.27)
-      aws-sdk-resources (= 2.2.27)
-    aws-sdk-core (2.2.27)
+    aws-sdk (2.2.28)
+      aws-sdk-resources (= 2.2.28)
+    aws-sdk-core (2.2.28)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.2.27)
-      aws-sdk-core (= 2.2.27)
+    aws-sdk-resources (2.2.28)
+      aws-sdk-core (= 2.2.28)
     backports (3.6.8)
     codeclimate-test-reporter (0.5.0)
       simplecov (>= 0.7.1, < 1.0.0)
@@ -32,6 +32,9 @@ GEM
     json (1.8.3)
     jwt (1.5.1)
     kgio (2.10.0)
+    metaclass (0.0.4)
+    mocha (1.1.0)
+      metaclass (~> 0.0.1)
     multi_json (1.11.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -109,6 +112,7 @@ DEPENDENCIES
   codeclimate-test-reporter
   encrypted_cookie
   go_script
+  mocha
   omniauth
   omniauth-myusa!
   rspec

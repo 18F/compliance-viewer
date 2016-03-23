@@ -55,21 +55,14 @@ describe ComplianceData do
   end
 
   describe '#keys' do
-    class StubObjectSummary
-      attr_reader :key
-      def initialize(key_value)
-        @key = key_value
-      end
-    end
-
     it 'retrieves correct output if given good input' do
       data = ComplianceData.new StubClasses::StubSettings
       expect(data.bucket).to receive(:objects)
         .and_return(
           [
-            StubObjectSummary.new(
+            StubClasses::StubObjectSummary.new(
               "#{StubClasses::StubSettings.results_folder}/abc"),
-            StubObjectSummary.new(
+            StubClasses::StubObjectSummary.new(
               "#{StubClasses::StubSettings.results_folder}/bcd")
           ])
       projects = data.keys
@@ -117,6 +110,17 @@ describe ComplianceData do
       data = ComplianceData.new StubClasses::StubSettings
       file = data.file_for 'name', nil
       expect(file.body.string).to eq body_value
+    end
+
+    it 'recovers if AWS throws an error' do
+      Aws.config[:s3] = {
+        stub_responses: {
+          get_object: 'NoSuchKey'
+        }
+      }
+      data = ComplianceData.new StubClasses::StubSettings
+      file = data.file_for 'name', nil
+      expect(file).to eq nil
     end
   end
 

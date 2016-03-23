@@ -13,7 +13,7 @@ A small application to access scan results stored in S3.
 
 Compliance Viewer relies on MyUSA for access control. You will need to create an application at https://staging.my.usa.gov to get it running.
 
-Create a `credentials.yml` based on the `credentials.example.yml`. This contains the configuration info for your AWS bucket.
+Create `config/production.yml` and `config/development.yml` based on the `config/example.yml`. This contains the configuration info for your AWS bucket as well as a few other application options.
 
 ### Locally
 
