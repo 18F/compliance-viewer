@@ -10,6 +10,10 @@ describe 'ComplianceViewer' do
   end
 
   def app
+    # "new!" is intentional (and ugly). Sinatra redefines new to include
+    # the Rack middleware. Before doing that, it aliases the existing
+    # functionality to new!. I do that so I can get access an actual
+    # ComplianceViewer instance.
     ComplianceViewer.new! StubComplianceData.new
   end
 
