@@ -33,6 +33,20 @@ module StubClasses
     end
   end
 
+  # Aws::Resources::Collection doesn't support .empty?. This object
+  # helps us to model that limitation more closely.
+  class StubCollection
+    include Enumerable
+
+    def initialize(items = [])
+      @items = items
+    end
+
+    def each(&block)
+      @items.each(&block)
+    end
+  end
+
   module StubSettings
     def self.aws_region
       'region'
