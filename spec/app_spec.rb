@@ -53,11 +53,11 @@ describe 'ComplianceViewer' do
       name = 'good'
       StubComplianceData.any_instance.stubs(:base_name).returns(name)
       StubComplianceData.any_instance.stubs(:versions).returns(
-        [
+        StubClasses::StubCollection.new([
           StubClasses::StubObjectVersion.new(name),
           StubClasses::StubObjectVersion.new(name),
           StubClasses::StubObjectVersion.new(name)
-        ]
+        ])
       )
       get "/results/#{name}", {},
           'rack.session' => { user_email: 'example@example.com' }
@@ -66,7 +66,8 @@ describe 'ComplianceViewer' do
     end
 
     it 'returns Invalid Project if passed a name that doesn\'t exist' do
-      StubComplianceData.any_instance.stubs(:versions).returns []
+      StubComplianceData.any_instance.stubs(:versions).returns(
+        StubClasses::StubCollection.new)
       get "/results/name", {},
           'rack.session' => { user_email: 'example@example.com' }
       expect(last_response).to be_ok

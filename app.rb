@@ -43,7 +43,7 @@ class ComplianceViewer < Sinatra::Base
 
   get '/results/:name' do |name|
     versions = compliance_data.versions name
-    return 'Invalid Project' if versions.empty?
+    return 'Invalid Project' if versions.count == 0
     erb :results, locals: { versions: versions }
   end
 
