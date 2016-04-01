@@ -10,9 +10,9 @@ deploy:
   edge: true
   provider: cloudfoundry
   api: https://api.cloud.gov
-  username:
+  username: cf_toolkit_deployer
   password:
-    secure:
+    secure: "24M4FScTPzdK04XKkOLeY1wXeJptTx0FeB6jVE7Ar8Xo1iWhbVldEnuf/KNPu5OO602FroP2yBJN+zawC36wNW2Z/XRlOOUdmoIdLHu3QKK2iRz80utBr6Q4eh0xAE48rBgQecXcKO701JroKRyFbeuQj2shlTuNRJih+toayoD2xmV7SKO0z2aygmb1QMV1tVP9UEwApbbH6LhpfAV8DIXxQeQrh9BXuFiYZiReFDO+DqVBKHGraAwVy4U4hL0kJbMxKokWTCj6E3OjIm2EMY9vK9Hq3Dm+YxrS/LAc6DxAhSHrUCOBKYl76MCpsnv/MFFhlp1993ZlOpH06aBvpc9htqYo/cd66vaqkzkAXi8l6QivCz5Fw+9nr+e6pngQ6036+pOJ7DJxTIwPHZH+sWITgzbijV55gJm80uF9KYt9d3I3OzHpbAfOJqwjbBHr5PLAwMFQl0szvOk/zCTTtragSUYSo3+GdFIlhUKqNpHo1EGjXbAM4QEsNkqP7AZUb/uQ2AYrUqXylCpAZwEt2FDS0Df9t7l/rvQYcIVtYhAGOiPXMtqZ6gEsjFd18nWvIk3zwy1ZGsOTI+Dt8Z3yX1V/RX5y8lyTld4PZk+pzoss+B51/rgju3oY64vFIq0euNIXP8KoaC1COLZkhwB2Lgshz3X8WR91NUltxx38hIY="
   organization: cf
   space: toolkit
   on:
