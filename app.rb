@@ -1,5 +1,4 @@
 require 'sinatra/base'
-require 'sinatra/config_file'
 require 'sinatra/reloader'
 require 'json'
 require_relative 'lib/zap_report'
@@ -7,10 +6,7 @@ require_relative 'lib/compliance_data'
 
 class ComplianceViewer < Sinatra::Base
   attr_reader :compliance_data
-  register Sinatra::ConfigFile
   include ZapReport
-
-  config_file "config/#{settings.environment}.yml"
 
   helpers do
     def authed?
@@ -18,9 +14,9 @@ class ComplianceViewer < Sinatra::Base
     end
   end
 
-  def initialize(data = ComplianceData.new(settings))
+  def initialize
     super
-    @compliance_data = data
+    @compliance_data = ComplianceData.new
   end
 
   get '/auth/myusa/callback' do

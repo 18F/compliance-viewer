@@ -1,29 +1,26 @@
 require 'aws-sdk'
 
 class ComplianceData
-  attr_reader :bucket, :settings
-
-  def initialize(settings)
-    raise ArgumentError if settings.nil?
+  def initialize
     Aws.config.update(
-      region: settings.aws_region,
-      credentials: Aws::Credentials.new(settings.aws_access_key,
-                                        settings.aws_secret_key))
-    @settings = settings
-    @bucket = Aws::S3::Bucket.new(settings.aws_bucket)
+      region: ENV['AWS_REGION'],
+      credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY'], ENV['AWS_SECRET_KEY'])
+    )
+
+    @bucket = Aws::S3::Bucket.new(ENV['AWS_BUCKET'])
   end
 
   def base_name(full_name)
-    File.basename (full_name || ''), @settings.results_format
+   File.basename (full_name || ''), ENV['RESULTS_FORMAT']
   end
 
   def full_name(base_name)
-    return '' if base_name.nil?
-    "#{@settings.results_folder}/#{base_name}#{@settings.results_format}"
+   return '' if base_name.nil?
+   "#{ENV['RESULTS_FOLDER']}/#{base_name}#{ENV['RESULTS_FORMAT']}"
   end
 
   def keys
-    projects = @bucket.objects(prefix: @settings.results_folder) || []
+    projects = @bucket.objects(prefix: ENV['RESULTS_FOLDER']) || []
     projects.map do |project|
       base_name(project.key)
     end

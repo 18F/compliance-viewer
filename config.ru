@@ -1,7 +1,16 @@
 require 'bundler/setup'
 require 'omniauth-myusa'
 require 'encrypted_cookie'
+require './lib/vcap_env'
 require './app'
+
+# Set ENV from CloudFoundry UserProvidedService JSON when in production.
+#  In other envs use pre-configured JSON
+if ENV['RACK_ENV'] == 'production'
+  VcapEnv.set_env(ENV['VCAP_SERVICES'])
+else
+  VcapEnv.set_env(File.read("#{__dir__}/env/#{ENV['RACK_ENV']}.json"))
+end
 
 cookie_settings = {
   secret: ENV['COOKIE_SECRET'],

@@ -11,22 +11,28 @@ A small application to access scan results stored in S3.
 
 ### Setup
 
-Compliance Viewer relies on MyUSA for access control. You will need to create an application at https://staging.my.usa.gov to get it running.
+Compliance Viewer relies on MyUSA for access control. You will need to **create an application** at https://staging.my.usa.gov to get it running.
 
-Create `config/production.yml` and `config/development.yml` based on the `config/example.yml`. This contains the configuration info for your AWS bucket as well as a few other application options.
+For your new application:
 
-### Locally
+1. The "Redirect uri" should be `https://<compliance-viewer-address>/auth/myusa/callback`.
+1. The "Email Address" checkbox under "Identify you by your email address" should be checked.
+1. Take note of the generated "MyUSA Consumer Public Key" and "MyUSA Consumer Secret Key".
 
-Create the following environment variables:
+### ENV
+#### Production
+We provide ENV variables via [User Provided Services](https://docs.cloudfoundry.org/devguide/services/user-provided.html). You can set them all interactively.
 
-`APP_ID`: MyUSA Consumer Public Key 
-`APP_SECRET`: MyUSA Consumer Secret Key 
-`COOKIE_SECRET`: A secret for your encrypted cookies.
+`cf cups compliance-viewer-env -p "app_id, app_secret, cookie_secret, aws_access_key, aws_secret_key, aws_bucket, aws_region, results_folder, results_format"`
 
-You can generate a good secret with:
-```
-ruby -rsecurerandom -e "puts SecureRandom.hex(32)"
-```
+The `cf env` command can be used to verify that ENV vars have been set.
+
+#### Locally
+User Provided Services expose values via CloudFoundry's `VCAP_SERVICES` ENV Variable, in JSON.  In development we mimic this.
+
+`cp env/example.json env/development.json` and fill out the required fields.  This JSON will be parsed the same way `VCAP_SERVICES` are parsed in production.
+
+Tip: you can generate a good `COOKIE_SECRET` with: `ruby -rsecurerandom -e "puts SecureRandom.hex(32)"`
 
 Run the application with `rackup`.
 
@@ -54,7 +60,7 @@ The `cf env` command will return the environment for `compliance-viewer`, includ
 ...
 ```
 
-You can update your credentials file with the first three pieces of information, and then re-push the app with `cf push`.
+You will need to set these values in the `compliance-viewer-env` User Provided Service.
 
 Alternatively, you can use an S3 bucket created directly via AWS.
 
@@ -64,15 +70,7 @@ aws s3api put-bucket-versioning --bucket BUCKET_NAME --versioning-configuration 
 ```
 or checked via:
 ```
-aws s3api get-bucket-versioning --bucket BUCKET_NAME 
-```
-
-To use MyUSA for authentication, you need to run:
-```
-cf set-env app-name APP_ID your_myusa_public_key
-cf set-env app-name APP_SECRET your_myusa_secret_key
-cf set-env app-name COOKIE_SECRET your_cookie_secret
-cf restage app-name 
+aws s3api get-bucket-versioning --bucket BUCKET_NAME
 ```
 
 ### Public domain

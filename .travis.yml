@@ -1,8 +1,20 @@
 language: ruby
 rvm:
- - "2.2.3"
-script: ./go test
+  - 2.2.3
+script: "./go test"
 addons:
-    code_climate:
-        repo_token: 
-            secure: "fTCho/addJXdYFStTCQhEEXYtSo5PSwJWFSmyMa2S2+mBI/RHRobl9cXwLVIYx66L6abkzmUBLSCj1I0HaxwBQq/FcRIqaiCl0Zeip+4nyrAK8Hl27K2v0QZhW5kH9tlHIUfJuBlTtqeG9kzuzl9Dij8E3IXJnsbtTow94kgKu8CrDh3qrKUwViXn2QUcwhy364TIX10CgCp8z2VugdgxX4IPot8lc//oq/vyR3hVctV+juShmtkbQS3byMh8rkMFfAKoYUKfMgTdYdTkNMBMGrHHuE1vzGDdLEozV6sLORlOhX3878xrwJxwx/hxSVlgO+FKNp4Qq8ZB0xu32FFWEcWWOtSEiQ3TCU4u9sCUZiMR0hm/M5lruSg6POIZwzJFgBLMJAxmvdZNAOFvL5Z+LokpomACOP/wzKr1U1Aohg2k4X+nqUMMTFW2NnsRvKT31HILOPQNFMD/W9dnWQ9jxttH1TnYaDGvEBWYH0hHLz7AcHilU5gnAFZHReXBLIvnBSstjTK+HzgQm8fWzcRGq7L3IQOJllWSb5Eq/z/bm3dJ4ZIWtqJPpz2awTwFDbne7n/mx2HbQIGqSn/GvF+kKObN5vnWvLPGpHDAicl171xtQ5eYf4ZsJ8rXSmOzUlOV5pvVqAR6kJW4w56+J2aej454zsS/2OSaTrwou6lU58="
+  code_climate:
+    repo_token:
+      secure: fTCho/addJXdYFStTCQhEEXYtSo5PSwJWFSmyMa2S2+mBI/RHRobl9cXwLVIYx66L6abkzmUBLSCj1I0HaxwBQq/FcRIqaiCl0Zeip+4nyrAK8Hl27K2v0QZhW5kH9tlHIUfJuBlTtqeG9kzuzl9Dij8E3IXJnsbtTow94kgKu8CrDh3qrKUwViXn2QUcwhy364TIX10CgCp8z2VugdgxX4IPot8lc//oq/vyR3hVctV+juShmtkbQS3byMh8rkMFfAKoYUKfMgTdYdTkNMBMGrHHuE1vzGDdLEozV6sLORlOhX3878xrwJxwx/hxSVlgO+FKNp4Qq8ZB0xu32FFWEcWWOtSEiQ3TCU4u9sCUZiMR0hm/M5lruSg6POIZwzJFgBLMJAxmvdZNAOFvL5Z+LokpomACOP/wzKr1U1Aohg2k4X+nqUMMTFW2NnsRvKT31HILOPQNFMD/W9dnWQ9jxttH1TnYaDGvEBWYH0hHLz7AcHilU5gnAFZHReXBLIvnBSstjTK+HzgQm8fWzcRGq7L3IQOJllWSb5Eq/z/bm3dJ4ZIWtqJPpz2awTwFDbne7n/mx2HbQIGqSn/GvF+kKObN5vnWvLPGpHDAicl171xtQ5eYf4ZsJ8rXSmOzUlOV5pvVqAR6kJW4w56+J2aej454zsS/2OSaTrwou6lU58=
+deploy:
+  edge: true
+  provider: cloudfoundry
+  api: https://api.cloud.gov
+  username:
+  password:
+    secure:
+  organization: cf
+  space: toolkit
+  on:
+    repo: 18F/compliance-viewer
+    branch: develop
