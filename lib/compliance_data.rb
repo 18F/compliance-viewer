@@ -1,6 +1,8 @@
 require 'aws-sdk'
 
 class ComplianceData
+  attr_reader :bucket
+  
   def initialize
     Aws.config.update(
       region: ENV['AWS_REGION'],

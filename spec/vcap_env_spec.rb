@@ -33,7 +33,7 @@ describe VcapEnv do
   end
 
   describe 'set_env' do
-    it 'should have an empty ENV before calling' do
+    it 'should have an empty ENV when this test starts' do
       expect(ENV['APP_ID']).to be nil
       expect(ENV['AWS_REGION']).to be nil
     end
