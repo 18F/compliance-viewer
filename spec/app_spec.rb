@@ -6,7 +6,12 @@ require 'stub_classes'
 describe 'ComplianceViewer' do
   include Rack::Test::Methods
 
-  class StubComplianceData
+  before(:all) do
+    set_test_env
+  end
+
+  after(:all) do
+    unset_test_env
   end
 
   def app
@@ -14,15 +19,16 @@ describe 'ComplianceViewer' do
     # the Rack middleware. Before doing that, it aliases the existing
     # functionality to new!. I do that so I can get access an actual
     # ComplianceViewer instance.
-    ComplianceViewer.new! StubComplianceData.new
+    ComplianceViewer.new!
   end
 
   describe '/' do
     it 'returns as expected with the index if authed' do
-      StubComplianceData.any_instance.stubs(:keys).returns(%w(abc bcd))
+      ComplianceData.any_instance.stubs(:keys).returns(%w(abc bcd))
       get '/', {}, 'rack.session' => { user_email: 'example@example.com' }
       expect(last_response).to be_ok
       expect(last_response.body).to include('Projects')
+      ComplianceData.any_instance.unstub(:keys)
     end
 
     it 'redirects to the auth page if unauthed' do
@@ -34,11 +40,12 @@ describe 'ComplianceViewer' do
 
   describe '/results' do
     it 'returns as expected with the index if authed' do
-      StubComplianceData.any_instance.stubs(:keys).returns(%w(abc bcd))
+      ComplianceData.any_instance.stubs(:keys).returns(%w(abc bcd))
       get '/results', {},
           'rack.session' => { user_email: 'example@example.com' }
       expect(last_response).to be_ok
       expect(last_response.body).to include('Projects')
+      ComplianceData.any_instance.unstub(:keys)
     end
 
     it 'redirects to the auth page if unauthed' do
@@ -51,8 +58,8 @@ describe 'ComplianceViewer' do
   describe '/results/:name' do
     it 'returns successfully if passed a name that exists' do
       name = 'good'
-      StubComplianceData.any_instance.stubs(:base_name).returns(name)
-      StubComplianceData.any_instance.stubs(:versions).returns(
+      ComplianceData.any_instance.stubs(:base_name).returns(name)
+      ComplianceData.any_instance.stubs(:versions).returns(
         StubClasses::StubCollection.new([
           StubClasses::StubObjectVersion.new(name),
           StubClasses::StubObjectVersion.new(name),
@@ -63,15 +70,18 @@ describe 'ComplianceViewer' do
           'rack.session' => { user_email: 'example@example.com' }
       expect(last_response).to be_ok
       expect(last_response.body).to include(name)
+      ComplianceData.any_instance.unstub(:base_name)
+      ComplianceData.any_instance.unstub(:versions)
     end
 
     it 'returns Invalid Project if passed a name that doesn\'t exist' do
-      StubComplianceData.any_instance.stubs(:versions).returns(
+      ComplianceData.any_instance.stubs(:versions).returns(
         StubClasses::StubCollection.new)
       get "/results/name", {},
           'rack.session' => { user_email: 'example@example.com' }
       expect(last_response).to be_ok
       expect(last_response.body).to include('Invalid Project')
+      ComplianceData.any_instance.unstub(:versions)
     end
 
     it 'redirects to the auth page if unauthed with a name' do
@@ -89,27 +99,30 @@ describe 'ComplianceViewer' do
 
   describe '/results/:name/:version' do
     it 'returns successfully if passed a name and version that exists' do
-      StubComplianceData.any_instance.stubs(:file_for).returns(
+      ComplianceData.any_instance.stubs(:file_for).returns(
         StubClasses::StubFile.new)
       get "/results/good/good", {},
           'rack.session' => { user_email: 'example@example.com' }
       expect(last_response).to be_ok
+      ComplianceData.any_instance.unstub(:file_for)
     end
 
     it 'returns successfully if passed a name and current version' do
-      StubComplianceData.any_instance.stubs(:file_for).returns(
+      ComplianceData.any_instance.stubs(:file_for).returns(
         StubClasses::StubFile.new)
       get "/results/good/current", {},
           'rack.session' => { user_email: 'example@example.com' }
       expect(last_response).to be_ok
+      ComplianceData.any_instance.unstub(:file_for)
     end
 
     it 'returns Invalid Version if passed a version that doesn\'t exist' do
-      StubComplianceData.any_instance.stubs(:file_for).returns nil
+      ComplianceData.any_instance.stubs(:file_for).returns nil
       get '/results/good/bad', {},
           'rack.session' => { user_email: 'example@example.com' }
       expect(last_response).to be_ok
       expect(last_response.body).to include('Invalid Version')
+      ComplianceData.any_instance.unstub(:file_for)
     end
 
     it 'redirects to the auth page if unauthed' do

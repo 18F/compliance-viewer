@@ -1,4 +1,5 @@
 credentials.yml
-config/development.yml
-config/production.yml
+env/development.json
 .rubocop-https---*
+.ruby-version
+.gem

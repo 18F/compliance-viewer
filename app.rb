@@ -1,5 +1,4 @@
 require 'sinatra/base'
-require 'sinatra/config_file'
 require 'sinatra/reloader'
 require 'json'
 require_relative 'lib/zap_report'
@@ -7,10 +6,7 @@ require_relative 'lib/compliance_data'
 
 class ComplianceViewer < Sinatra::Base
   attr_reader :compliance_data
-  register Sinatra::ConfigFile
   include ZapReport
-
-  config_file "config/#{settings.environment}.yml"
 
   helpers do
     def authed?
@@ -18,9 +14,9 @@ class ComplianceViewer < Sinatra::Base
     end
   end
 
-  def initialize(data = ComplianceData.new(settings))
+  def initialize
     super
-    @compliance_data = data
+    @compliance_data = ComplianceData.new
   end
 
   get '/auth/myusa/callback' do
@@ -34,26 +30,26 @@ class ComplianceViewer < Sinatra::Base
   end
 
   get '/' do
-    erb :index, locals: { projects: compliance_data.keys }
+    erb :index, locals: { projects: @compliance_data.keys }
   end
 
   get '/results' do
-    erb :index, locals: { projects: compliance_data.keys }
+    erb :index, locals: { projects: @compliance_data.keys }
   end
 
   get '/results/:name' do |name|
-    versions = compliance_data.versions name
+    versions = @compliance_data.versions(name)
     return 'Invalid Project' if versions.count == 0
     erb :results, locals: { versions: versions }
   end
 
   get '/results/:name/:version' do |name, version|
     version = nil if version == 'current'
-    file_data = compliance_data.file_for(name, version)
+    file_data = @compliance_data.file_for(name, version)
     if file_data
       if params['format'] == 'json'
         attachment "#{name}#{settings.results_format}"
-        compliance_data.json_for file_data
+        @compliance_data.json_for file_data
       else
         erb :report, locals: { report_data: ZapReport.create_report(file_data) }
       end
