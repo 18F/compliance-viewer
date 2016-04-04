@@ -1,16 +1,11 @@
 ---
 applications:
-#- name: compliance-viewer
-- name: ct-dev-compliance-viewer
-  #memory: 512M
-  memory: 64M
+- name: compliance-viewer
+  memory: 512M
   instances: 1
-  #domain: 18f.gov
-  #host: compliance-viewer
+  domain: 18f.gov
+  host: compliance-viewer
   services:
-    #- s3-compliance-toolkit
-    - ct_dev
-    # The following services are User Provided, and function as ENV vars.
-    - dev-compliance-viewer-env
-    # - compliance-viewer-env
-  command: rackup -p $PORT -E development
+    - s3-compliance-toolkit
+    - compliance-viewer-env # This service is User Provided, and functions as ENV vars.
+  command: rackup -p $PORT -E production
