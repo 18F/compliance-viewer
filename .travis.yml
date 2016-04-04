@@ -17,4 +17,4 @@ deploy:
   space: toolkit
   on:
     repo: 18F/compliance-viewer
-    branch: develop
+    branch: master
