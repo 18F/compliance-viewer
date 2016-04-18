@@ -17,7 +17,7 @@ For your new application:
 
 1. The "Redirect uri" should be `https://<compliance-viewer-address>/auth/myusa/callback`.
 1. The "Email Address" checkbox under "Identify you by your email address" should be checked.
-1. Take note of the generated "MyUSA Consumer Public Key" and "MyUSA Consumer Secret Key".
+1. Take note of the generated "MyUSA Consumer Public Key" and "MyUSA Consumer Secret Key", they are `app_id` and `app_secret` in the ENV.
 
 ### ENV
 #### Production
@@ -26,6 +26,8 @@ We provide ENV variables via [User Provided Services](https://docs.cloudfoundry.
 `cf cups compliance-viewer-env -p "app_id, app_secret, cookie_secret, aws_access_key, aws_secret_key, aws_bucket, aws_region, results_folder, results_format"`
 
 The `cf env` command can be used to verify that ENV vars have been set.
+
+Use `cf update-user-provided-service` to update existing values.
 
 #### Locally
 User Provided Services expose values via CloudFoundry's `VCAP_SERVICES` ENV Variable, in JSON.  In development we mimic this.
