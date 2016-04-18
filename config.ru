@@ -22,7 +22,7 @@ use OmniAuth::Builder do
   provider :myusa, ENV['APP_ID'], ENV['APP_SECRET'],
            scope: 'profile.email',
            client_options: {
-             site: 'https://staging.my.usa.gov',
+             site: 'https://alpha.my.usa.gov',
              token_url: '/oauth/token'
            }
 end

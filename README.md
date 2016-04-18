@@ -11,7 +11,7 @@ A small application to access scan results stored in S3.
 
 ### Setup
 
-Compliance Viewer relies on MyUSA for access control. You will need to **create an application** at https://staging.my.usa.gov to get it running.
+Compliance Viewer relies on MyUSA for access control. You will need to **create an application** at https://alpha.my.usa.gov to get it running.
 
 For your new application:
 
