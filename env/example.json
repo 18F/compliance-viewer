@@ -1,15 +1,19 @@
 {
+  "s3": [
+    {
+      "credentials": {
+        "access_key_id": "<AWS_ACCESS_KEY>",
+        "bucket": "<AWS_BUCKET>",
+        "secret_access_key": "<AWS_SECRET_KEY>"
+      }
+    }
+  ],
   "user-provided": [
     {
-      "name": "compliance-viewer-env",
-      "label": "user-provided",
       "credentials": {
         "app_id": "<APP_ID>",
         "app_secret": "<APP_SECRET>",
-        "aws_access_key": "<AWS_ACCESS_KEY>",
-        "aws_bucket": "<AWS_BUCKET>",
         "aws_region": "<AWS_REGION>",
-        "aws_secret_key": "<AWS_SECRET_KEY>",
         "cookie_secret": "<COOKIE_SECRET>",
         "results_folder": "<RESULTS_FOLDER>",
         "results_format": "<RESULTS_FORMAT>"

@@ -56,8 +56,8 @@ RSpec.configure do |config|
   end
 
   def unset_test_env
-    ENV['APP_ID'] = ENV['APP_SECRET'] = ENV['AWS_ACCESS_KEY'] = ENV['AWS_BUCKET'] \
-      = ENV['AWS_REGION'] = ENV['AWS_SECRET_KEY'] = ENV['COOKIE_SECRET'] \
+    ENV['APP_ID'] = ENV['APP_SECRET'] = ENV['ACCESS_KEY_ID'] = ENV['BUCKET'] \
+      = ENV['AWS_REGION'] = ENV['SECRET_ACCESS_KEY'] = ENV['COOKIE_SECRET'] \
       = ENV['RESULTS_FOLDER'] = ENV['RESULTS_FORMAT'] = nil
   end
 end

@@ -5,6 +5,15 @@ describe VcapEnv do
   def vcap_json
     %(
     {
+      "s3": [
+        {
+          "credentials": {
+            "access_key_id": "123/abc+456&def",
+            "bucket": "cloud.gov-bucket-names/are+long",
+            "secret_access_key": "shhhhhhhhhhhhh"
+          }
+        }
+      ],
       "user-provided": [
         {
           "name": "compliance-viewer-env",
@@ -12,10 +21,7 @@ describe VcapEnv do
           "credentials": {
             "app_id": "11235813",
             "app_secret": "*lips=zipped*",
-            "aws_access_key": "123/abc+456&def",
-            "aws_bucket": "cloud.gov-bucket-names/are+long",
             "aws_region": "us-east-1",
-            "aws_secret_key": "shhhhhhhhhhhhh",
             "cookie_secret": "don'toverbakethem",
             "results_folder": "results",
             "results_format": ".json"
@@ -42,7 +48,7 @@ describe VcapEnv do
       VcapEnv.set_env(vcap_json)
       expect(ENV['APP_ID']).to eq "11235813"
       expect(ENV['AWS_REGION']).to eq "us-east-1"
-      expect(ENV['AWS_ACCESS_KEY']).to eq "123/abc+456&def"
+      expect(ENV['ACCESS_KEY_ID']).to eq "123/abc+456&def"
       expect(ENV['COOKIE_SECRET']).to eq "don'toverbakethem"
       expect(ENV['RESULTS_FORMAT']).to eq ".json"
     end

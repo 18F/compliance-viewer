@@ -4,10 +4,11 @@ require 'json'
 module VcapEnv
   def self.set_env(vcap_json)
     vcap = JSON.parse(vcap_json)
-    env = vcap["user-provided"].find { |service| service["name"] == "compliance-viewer-env"  }
-
-    env["credentials"].each_pair do |name, value|
-      ENV[name.upcase] = value
+    %w(s3 user-provided).each do |group|
+      env = vcap[group].first
+      env['credentials'].each_pair do |name, value|
+        ENV[name.upcase] = value
+      end
     end
   end
 end

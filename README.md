@@ -25,7 +25,7 @@ Compliance Viewer relies on MyUSA for access control. To set it up:
 We provide environment variables via [User Provided Services](https://docs.cloudfoundry.org/devguide/services/user-provided.html). You can set them all interactively.
 
 ```bash
-cf cups compliance-viewer-env -p "app_id, app_secret, cookie_secret, aws_access_key, aws_secret_key, aws_bucket, aws_region, results_folder, results_format"
+cf cups compliance-viewer-env -p "app_id, app_secret, cookie_secret, aws_region, results_folder, results_format"
 ```
 
 The `cf env` command can be used to verify that ENV vars have been set. Use `cf uups` to update existing values.
@@ -67,24 +67,7 @@ Compliance Viewer uses an S3 bucket provided by cloud.gov. After pushing the app
 cf target -o cf -s toolkit
 cf create-service s3 basic s3-compliance-toolkit
 cf bind-service compliance-viewer s3-compliance-toolkit
-cf env compliance-viewer
 ```
-
-The `cf env` command will return the environment for `compliance-viewer`, including the information for the newly created bucket:
-
-```javascript
-"s3": [
-  {
-    "credentials": {
-     "access_key_id": "ACCESS_KEY",
-     "bucket": "BUCKET_NAME",
-     "secret_access_key": "SECRET_KEY",
-     "username": "USERNAME"
-  },
-// ...
-```
-
-You will need to set these values in the `compliance-viewer-env` User Provided Service. Alternatively, you can use an S3 bucket created directly via AWS.
 
 Compliance Viewer relies on S3 bucket versioning. It can be enabled via the [AWS CLI](https://aws.amazon.com/cli/) using:
 

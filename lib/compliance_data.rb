@@ -2,14 +2,14 @@ require 'aws-sdk'
 
 class ComplianceData
   attr_reader :bucket
-  
+
   def initialize
     Aws.config.update(
       region: ENV['AWS_REGION'],
-      credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY'], ENV['AWS_SECRET_KEY'])
+      credentials: Aws::Credentials.new(ENV['ACCESS_KEY_ID'], ENV['SECRET_ACCESS_KEY'])
     )
 
-    @bucket = Aws::S3::Bucket.new(ENV['AWS_BUCKET'])
+    @bucket = Aws::S3::Bucket.new(ENV['BUCKET'])
   end
 
   def base_name(full_name)
