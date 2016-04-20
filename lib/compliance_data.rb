@@ -1,28 +1,29 @@
 require 'aws-sdk'
+require 'cfenv'
 
 class ComplianceData
   attr_reader :bucket
 
   def initialize
     Aws.config.update(
-      region: ENV['AWS_REGION'],
-      credentials: Aws::Credentials.new(ENV['ACCESS_KEY_ID'], ENV['SECRET_ACCESS_KEY'])
+      region: user_credentials.aws_region,
+      credentials: Aws::Credentials.new(s3_credentials.access_key_id, s3_credentials.secret_access_key)
     )
 
-    @bucket = Aws::S3::Bucket.new(ENV['BUCKET'])
+    @bucket = Aws::S3::Bucket.new(s3_credentials.bucket)
   end
 
   def base_name(full_name)
-   File.basename (full_name || ''), ENV['RESULTS_FORMAT']
+   File.basename (full_name || ''), results_format
   end
 
   def full_name(base_name)
    return '' if base_name.nil?
-   "#{ENV['RESULTS_FOLDER']}/#{base_name}#{ENV['RESULTS_FORMAT']}"
+   "#{results_folder}/#{base_name}#{results_format}"
   end
 
   def keys
-    projects = @bucket.objects(prefix: ENV['RESULTS_FOLDER']) || []
+    projects = @bucket.objects(prefix: results_folder) || []
     projects.map do |project|
       base_name(project.key)
     end
@@ -50,5 +51,23 @@ class ComplianceData
     else
       file_data.body.string
     end
+  end
+
+  private
+
+  def s3_credentials
+    Cfenv.service('s3').credentials
+  end
+
+  def user_credentials
+    Cfenv.service('user-provided').credentials
+  end
+
+  def results_folder
+    user_credentials.results_folder
+  end
+
+  def results_format
+    user_credentials.results_format
   end
 end

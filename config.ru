@@ -1,25 +1,23 @@
 require 'bundler/setup'
 require 'omniauth-myusa'
 require 'encrypted_cookie'
-require './lib/vcap_env'
+require 'cfenv'
 require './app'
 
-# Set ENV from CloudFoundry UserProvidedService JSON when in production.
-#  In other envs use pre-configured JSON
-if ENV['RACK_ENV'] == 'production'
-  VcapEnv.set_env(ENV['VCAP_SERVICES'])
-else
-  VcapEnv.set_env(File.read("#{__dir__}/env/#{ENV['RACK_ENV']}.json"))
+unless ENV['RACK_ENV'] == 'production'
+  # use local configuration file
+  ENV['VCAP_SERVICES'] = File.read("#{__dir__}/env/#{ENV['RACK_ENV']}.json")
 end
+creds = Cfenv.service('user-provided').credentials
 
 cookie_settings = {
-  secret: ENV['COOKIE_SECRET'],
+  secret: creds.cookie_secret,
   httponly: true
 }
 use Rack::Session::EncryptedCookie, cookie_settings
 
 use OmniAuth::Builder do
-  provider :myusa, ENV['APP_ID'], ENV['APP_SECRET'],
+  provider :myusa, creds.app_id, creds.app_secret,
            scope: 'profile.email',
            client_options: {
              site: 'https://alpha.my.usa.gov',

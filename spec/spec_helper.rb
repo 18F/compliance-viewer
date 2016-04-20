@@ -52,12 +52,10 @@ RSpec.configure do |config|
   end
 
   def set_test_env
-    VcapEnv.set_env(File.read("#{__dir__}/test-env.json"))
+    ENV['VCAP_SERVICES'] = File.read("#{__dir__}/test-env.json")
   end
 
   def unset_test_env
-    ENV['APP_ID'] = ENV['APP_SECRET'] = ENV['ACCESS_KEY_ID'] = ENV['BUCKET'] \
-      = ENV['AWS_REGION'] = ENV['SECRET_ACCESS_KEY'] = ENV['COOKIE_SECRET'] \
-      = ENV['RESULTS_FOLDER'] = ENV['RESULTS_FORMAT'] = nil
+    ENV['VCAP_SERVICES'] = nil
   end
 end

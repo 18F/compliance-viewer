@@ -9,6 +9,7 @@ gem 'aws-sdk'
 gem 'omniauth'
 gem 'omniauth-myusa', git: 'https://github.com/18F/omniauth-myusa.git'
 gem 'encrypted_cookie'
+gem 'cfenv'
 
 group :test, :development do
   gem 'rspec'

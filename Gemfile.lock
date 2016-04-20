@@ -17,6 +17,9 @@ GEM
     aws-sdk-resources (2.2.34)
       aws-sdk-core (= 2.2.34)
     backports (3.6.8)
+    cfenv (0.0.2)
+      hashie
+      multi_json
     codeclimate-test-reporter (0.5.0)
       simplecov (>= 0.7.1, < 1.0.0)
     diff-lcs (1.2.5)
@@ -110,6 +113,7 @@ PLATFORMS
 
 DEPENDENCIES
   aws-sdk
+  cfenv
   codeclimate-test-reporter
   encrypted_cookie
   go_script

@@ -58,16 +58,16 @@ describe ComplianceData do
   end
 
   describe '#keys' do
+    def results_folder
+      Cfenv.service('user-provided').credentials.results_folder
+    end
+
     it 'retrieves correct output if given good input' do
       data = ComplianceData.new
-      expect(data.bucket).to receive(:objects)
-        .and_return(
-          [
-            StubClasses::StubObjectSummary.new(
-              "#{ENV['RESULTS_FOLDER']}/abc"),
-            StubClasses::StubObjectSummary.new(
-              "#{ENV['RESULTS_FOLDER']}/bcd")
-          ])
+      expect(data.bucket).to receive(:objects).and_return([
+        StubClasses::StubObjectSummary.new("#{results_folder}/abc"),
+        StubClasses::StubObjectSummary.new("#{results_folder}/bcd")
+      ])
       projects = data.keys
       expect(projects).to eq %w(abc bcd)
     end

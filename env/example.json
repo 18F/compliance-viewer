@@ -1,6 +1,7 @@
 {
   "s3": [
     {
+      "name": "s3-compliance-toolkit",
       "credentials": {
         "access_key_id": "<AWS_ACCESS_KEY>",
         "bucket": "<AWS_BUCKET>",
@@ -10,6 +11,7 @@
   ],
   "user-provided": [
     {
+      "name": "compliance-viewer-env",
       "credentials": {
         "app_id": "<APP_ID>",
         "app_secret": "<APP_SECRET>",
