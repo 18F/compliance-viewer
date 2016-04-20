@@ -40,13 +40,7 @@ User Provided Services expose values via CloudFoundry's `VCAP_SERVICES` environm
     cp env/example.json env/development.json
     ```
 
-1. Fill out the required fields. This JSON will be parsed the same way `VCAP_SERVICES` are parsed in production.
-    * Tip: you can generate a good `COOKIE_SECRET` with:
-
-        ```bash
-        ruby -rsecurerandom -e "puts SecureRandom.hex(32)"
-        ```
-
+1. Fill out the required fields. This JSON will be parsed the same way [`VCAP_SERVICES`](https://docs.cloudfoundry.org/devguide/deploy-apps/environment-variable.html#VCAP-SERVICES) are parsed in production.
 1. Run the application with
 
     ```bash

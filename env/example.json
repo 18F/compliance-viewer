@@ -15,10 +15,10 @@
       "credentials": {
         "app_id": "<APP_ID>",
         "app_secret": "<APP_SECRET>",
-        "aws_region": "<AWS_REGION>",
-        "cookie_secret": "<COOKIE_SECRET>",
-        "results_folder": "<RESULTS_FOLDER>",
-        "results_format": "<RESULTS_FORMAT>"
+        "aws_region": "us-east-1",
+        "cookie_secret": "somelongsecretbutthisisafakeone",
+        "results_folder": "results",
+        "results_format": ".json"
       }
     }
   ]
