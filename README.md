@@ -25,7 +25,7 @@ Compliance Viewer relies on MyUSA for access control. To set it up:
 We provide environment variables via [User Provided Services](https://docs.cloudfoundry.org/devguide/services/user-provided.html). You can set them all interactively.
 
 ```bash
-cf cups compliance-viewer-env -p "app_id, app_secret, cookie_secret, aws_region, results_folder, results_format"
+cf cups compliance-viewer-env -p "app_id, app_secret, cookie_secret, aws_region, results_folder"
 ```
 
 The `cf env` command can be used to verify that ENV vars have been set. Use `cf uups` to update existing values.

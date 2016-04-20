@@ -14,12 +14,12 @@ class ComplianceData
   end
 
   def base_name(full_name)
-   File.basename (full_name || ''), results_format
+   File.basename (full_name || ''), '.json'
   end
 
   def full_name(base_name)
    return '' if base_name.nil?
-   "#{results_folder}/#{base_name}#{results_format}"
+   "#{results_folder}/#{base_name}.json"
   end
 
   def keys
@@ -65,9 +65,5 @@ class ComplianceData
 
   def results_folder
     user_credentials.results_folder
-  end
-
-  def results_format
-    user_credentials.results_format
   end
 end

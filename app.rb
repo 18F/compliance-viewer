@@ -49,8 +49,7 @@ class ComplianceViewer < Sinatra::Base
     file_data = @compliance_data.file_for(name, version)
     if file_data
       if params['format'] == 'json'
-        extension = Cfenv.service('user-provided').credentials.results_format
-        attachment "#{name}#{extension}"
+        attachment "#{name}.json"
         @compliance_data.json_for file_data
       else
         erb :report, locals: { report_data: ZapReport.create_report(file_data) }
