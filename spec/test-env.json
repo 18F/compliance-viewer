@@ -1,18 +1,21 @@
 {
+  "s3": [
+    {
+      "credentials": {
+        "access_key_id": "123",
+        "bucket": "bucket22",
+        "secret_access_key": "234"
+      }
+    }
+  ],
   "user-provided": [
     {
-      "name": "compliance-viewer-env",
-      "label": "user-provided",
       "credentials": {
         "app_id": "000",
         "app_secret": "234",
-        "aws_access_key": "123",
-        "aws_bucket": "bucket22",
         "aws_region": "region",
-        "aws_secret_key": "234",
         "cookie_secret": "999",
-        "results_folder": "results",
-        "results_format": ".json"
+        "results_folder": "results"
       }
     }
   ]
