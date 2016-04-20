@@ -1,4 +1,5 @@
 ---
+buildpack: "https://github.com/ozzyjohnson/heroku-buildpack-multi.git"
 applications:
 - name: compliance-viewer
   memory: 512M
