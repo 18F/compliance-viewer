@@ -3,5 +3,3 @@ env/development.json
 .rubocop-https---*
 .ruby-version
 .gem
-public/vendor
-node_modules
