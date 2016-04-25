@@ -9,4 +9,4 @@ applications:
   services:
     - s3-compliance-toolkit
     - compliance-viewer-env # This service is User Provided, and functions as ENV vars.
-  command: rackup -p $PORT -E production
+  command: bin/run.sh 
