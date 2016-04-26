@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "cloudgov-style": "~0.3.4"
+  }
+}

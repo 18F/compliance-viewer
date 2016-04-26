@@ -18,6 +18,18 @@ Compliance Viewer relies on MyUSA for access control. To set it up:
 1. The "Email Address" checkbox under "Identify you by your email address" should be checked.
 1. Take note of the generated "MyUSA Consumer Public Key" and "MyUSA Consumer Secret Key", they are `app_id` and `app_secret` in the ENV.
 
+### Cloudgov-style
+
+Compliance Viewer uses the [cloudgov_style](https://github.com/18F/cg-style) package to handle the basic styling of the site. To set it up:
+
+* Run
+
+    ```bash
+    ./go update_cg_style
+    ```
+
+before running or deploying the application. That command will remove the existing `public/vendor` directory, update the npm package, and recreate the `public/vendor` directory.
+
 ### ENV
 
 #### Production
