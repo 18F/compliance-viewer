@@ -57,4 +57,9 @@ def_command :update_cg_style, 'Update cloudgov_styles' do
   exec_cmd "cp -R ./node_modules/cloudgov-style/font/ #{vendor_dir}/fonts"
 end
 
+def_command :test_ci, 'update styles and then run the tests' do |args|
+  update_cg_style
+  test args
+end
+
 execute_command ARGV
