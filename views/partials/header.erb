@@ -1,75 +1,29 @@
-<html lang="en">
-  <head>
-    <link href="/vendor/css/cloudgov-style.css" rel="stylesheet" />
-    <link href="/css/main.css" rel="stylesheet" />
-    <title>Compliance Viewer</title>
-  </head>
-
-  <body>
-
 <!-- start header -->
-    <div class="usa-disclaimer">
-      <div class="usa-grid">
-        <span class="usa-disclaimer-official">An official website of the United States Government
-          <img alt="US flag signifying that this is a United States Federal Government website" src="/vendor/img/us_flag_small.png">
-        </span>
-        <span class="usa-disclaimer-stage">This site is currently in alpha. <a href="https://18f.gsa.gov/dashboard/stages/#alpha">Learn more.</a></span>
-      </div>
+<div class="usa-disclaimer">
+  <div class="usa-grid">
+    <span class="usa-disclaimer-official">An official website of the United States Government
+      <img alt="US flag signifying that this is a United States Federal Government website" src="/vendor/img/us_flag_small.png">
+    </span>
+    <span class="usa-disclaimer-stage">This site is currently in alpha. <a href="https://18f.gsa.gov/dashboard/stages/#alpha">Learn more.</a></span>
+  </div>
+</div>
+<header class="header">
+  <div class="header-wrap">
+
+    <!-- start logo -->
+    <div class="logo" id="logo">
+      <h1 class="header-title"><a href="/" title="Home">Compliance Viewer</a></h1>
     </div>
-    <header class="header">
-      <div class="header-wrap">
+    <!--end logo -->
 
-        <!-- start logo -->
-        <div class="logo" id="logo">
-          <h1 class="header-title">
-            <a href="/" title="Home">Compliance Viewer</a>
-          </h1>
-        </div>
-        <!--end logo -->
-
-        <!-- start top navigation -->
-        <nav class="header-side">
-          <ul class="nav">
-            <li class="nav-link">
-              <a href="/new">New Project?</a> 
-            </li>
-            <li class="nav-link">
-              <a href="/">Documentation</a> 
-            </li>
-            <li class="nav-link">
-              <a href="/">Logout</a> 
-            </li>
-          </ul>
-        </nav>
-        <!-- end top navigation -->
-      </div>
-
-    </header>
-    <!-- end header -->
-    <main class="sidenav-parent">
-      <div class="sidenav-main" id="main-content">
-        <div class="usa-content content">
-        <%= yield %>
-        </div>
-      </div>
-    </main>
-
-    <footer class="usa-footer usa-footer-slim usa-sans">
-      <div class="cv-footer usa-grid">
-        <div class="usa-width-one-half">
-          <div class="usa-footer-logo">
-            <a href="https://18f.gsa.gov"><img class="usa-footer-slim-logo-img" src="/img/18f-logo.svg" alt="Logo image"></a>
-            <h3 class="usa-footer-slim-logo-heading">Compliance Viewer</h3>
-          </div>
-        </div>
-        <div class="usa-width-one-half">
-          <div class="usa-footer-logo cv-footer-github">
-            <a href="https://github.com/18F/compliance-viewer" class="usa-footer-slim-logo-heading cv-footer-github-link">View our code on GitHub</a>
-            <img class="usa-footer-slim-logo-img cv-footer-github-img" src="/img/github.png" alt="Logo image">
-          </div>  
-        </div>  
-      </div>
-    </footer>
-    <script src="/vendor/js/cloudgov-style.js"></script>
-  </body>
-</html>
+    <!-- start top navigation -->
+    <nav class="header-side">
+      <ul class="nav">
+        <li class="nav-link"><a href="/new">New Project?</a></li>
+        <li class="nav-link"><a href="https://pages.18f.gov/before-you-ship/">Documentation</a></li>
+        <li class="nav-link"><a href="/auth/logout">Logout</a></li>
+      </ul>
+    </nav>
+    <!-- end top navigation -->
+  </div>
+</header>
