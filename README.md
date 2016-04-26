@@ -28,7 +28,7 @@ Compliance Viewer uses the [cloudgov_style](https://github.com/18F/cg-style) pac
     ./go update_cg_style
     ```
 
-before running or deploying the application. That command will remove the existing `public/vendor` directory, update the npm gem, and recreate the `public/vendor` directory.
+before running or deploying the application. That command will remove the existing `public/vendor` directory, update the npm package, and recreate the `public/vendor` directory.
 
 ### ENV
 
