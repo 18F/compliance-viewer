@@ -43,7 +43,6 @@ end
 def_command :lint, 'Run style-checking tools' do |files|
   files = files.group_by { |f| File.extname f }
   lint_ruby files['.rb'] # uses rubocop
-  lint_javascript Dir.pwd, files['.js'] # uses node_modules/jshint
 end
 
 execute_command ARGV
