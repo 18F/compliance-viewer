@@ -49,6 +49,7 @@ User Provided Services expose values via CloudFoundry's `VCAP_SERVICES` environm
 1. Run the application with
 
     ```bash
+    bundle
     rackup
     ```
 
