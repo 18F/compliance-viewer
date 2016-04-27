@@ -20,15 +20,8 @@ Compliance Viewer relies on MyUSA for access control. To set it up:
 
 ### Cloudgov-style
 
-Compliance Viewer uses the [cloudgov_style](https://github.com/18F/cg-style) package to handle the basic styling of the site. To set it up:
 
-* Run
-
-    ```bash
-    ./go update_cg_style
-    ```
-
-before running or deploying the application. That command will remove the existing `public/vendor` directory, update the npm package, and recreate the `public/vendor` directory.
+Compliance Viewer uses the [cloudgov_style](https://github.com/18F/cg-style) compiled CSS, images and fonts. They are currently being copied into the `assets` and `public` directory for MVP of the compliance viewer.
 
 ### ENV
 
