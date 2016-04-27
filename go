@@ -46,6 +46,7 @@ def_command :lint, 'Run style-checking tools' do |files|
   lint_javascript Dir.pwd, files['.js'] # uses node_modules/jshint
 end
 
+<<<<<<< af10b3d3c5ee4de1388c8d9327542e54b7fbb215
 def_command :update_cg_style, 'Update cloudgov_styles' do
   vendor_dir = './public/vendor'
   exec_cmd "npm install"
@@ -62,4 +63,6 @@ def_command :test_ci, 'update styles and then run the tests' do |args|
   test args
 end
 
+=======
+>>>>>>> Removing cloud.gov styles update script for MVP.
 execute_command ARGV
