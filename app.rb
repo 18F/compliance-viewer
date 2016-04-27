@@ -49,11 +49,6 @@ class ComplianceViewer < Sinatra::Base
     redirect '/'
   end
 
-  get '/auth/logout' do
-    session[:user_email] = nil 
-    redirect "https://alpha.my.usa.gov/users/sign_out?continue=http://#{host_with_port}/"
-  end
-
   before %r{^(?!\/auth)} do
     redirect '/auth/myusa' unless authed?
   end
