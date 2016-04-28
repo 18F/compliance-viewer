@@ -1,5 +1,6 @@
 require 'aws-sdk'
 require 'cfenv'
+require 'parallel'
 
 class ComplianceData
   attr_reader :bucket
@@ -29,7 +30,9 @@ class ComplianceData
   end
 
   def summaries
-    s3_summary_objects.map do |s3_object|
+    # convert to an array so we can get the number of projects
+    objects = s3_summary_objects.to_a
+    Parallel.map(objects, in_threads: objects.size) do |s3_object|
       ZapSummary.from_s3_object(s3_object)
     end
   end
