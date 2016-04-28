@@ -5,12 +5,10 @@ class ComplianceData
   attr_reader :bucket
 
   def initialize
-    Aws.config.update(
+    @bucket = Aws::S3::Bucket.new(s3_credentials.bucket,
       region: user_credentials.aws_region,
       credentials: Aws::Credentials.new(s3_credentials.access_key_id, s3_credentials.secret_access_key)
     )
-
-    @bucket = Aws::S3::Bucket.new(s3_credentials.bucket)
   end
 
   def base_name(full_name)
