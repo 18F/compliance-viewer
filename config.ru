@@ -2,6 +2,7 @@ require 'bundler/setup'
 require 'omniauth-myusa'
 require 'encrypted_cookie'
 require 'cfenv'
+require 'sprockets'
 require './app'
 
 unless ENV['RACK_ENV'] == 'production'
@@ -23,6 +24,10 @@ use OmniAuth::Builder do
              site: 'https://alpha.my.usa.gov',
              token_url: '/oauth/token'
            }
+end
+
+map '/assets' do
+  run ComplianceViewer.assets
 end
 
 run ComplianceViewer

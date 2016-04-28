@@ -4,6 +4,8 @@ require 'json'
 require 'cfenv'
 require_relative 'lib/zap_report'
 require_relative 'lib/compliance_data'
+require 'sprockets'
+require 'sprockets-helpers'
 
 class ComplianceViewer < Sinatra::Base
   attr_reader :compliance_data
@@ -18,6 +20,27 @@ class ComplianceViewer < Sinatra::Base
   def initialize
     super
     @compliance_data = ComplianceData.new
+  end
+
+  set :assets, Sprockets::Environment.new(root)
+
+  configure do
+    assets.append_path File.join(root, 'assets', 'stylesheets')
+    assets.append_path File.join(root, 'assets', 'javascripts')
+
+    Sprockets::Helpers.configure do |config|
+      config.environment = assets
+      config.prefix      = '/assets'
+      config.digest      = true
+    end
+  end
+
+  helpers do
+    include Sprockets::Helpers
+  end
+
+  before do
+    cache_control :public, :must_revalidate, :max_age => 60
   end
 
   get '/auth/myusa/callback' do
@@ -58,4 +81,6 @@ class ComplianceViewer < Sinatra::Base
       'Invalid Version'
     end
   end
+
+
 end

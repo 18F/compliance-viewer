@@ -10,11 +10,13 @@ gem 'omniauth'
 gem 'omniauth-myusa', git: 'https://github.com/18F/omniauth-myusa.git'
 gem 'encrypted_cookie'
 gem 'cfenv'
+gem 'sprockets'
+gem 'sprockets-helpers'
+gem 'sass'
 
 group :test, :development do
   gem 'rspec'
   gem 'rubocop'
-  gem 'go_script'
   gem 'simplecov'
   gem 'mocha'
 end

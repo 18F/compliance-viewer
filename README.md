@@ -18,6 +18,11 @@ Compliance Viewer relies on MyUSA for access control. To set it up:
 1. The "Email Address" checkbox under "Identify you by your email address" should be checked.
 1. Take note of the generated "MyUSA Consumer Public Key" and "MyUSA Consumer Secret Key", they are `app_id` and `app_secret` in the ENV.
 
+### Cloudgov-style
+
+
+Compliance Viewer uses the [cloudgov_style](https://github.com/18F/cg-style) compiled CSS, images and fonts. They are currently being copied into the `assets` and `public` directory for MVP of the compliance viewer.
+
 ### ENV
 
 #### Production
@@ -44,6 +49,7 @@ User Provided Services expose values via CloudFoundry's `VCAP_SERVICES` environm
 1. Run the application with
 
     ```bash
+    bundle
     rackup
     ```
 
