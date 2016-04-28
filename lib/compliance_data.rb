@@ -22,21 +22,24 @@ class ComplianceData
    "#{results_folder}/#{base_name}.json"
   end
 
+  def s3_result_objects
+    bucket.objects(prefix: results_folder) || []
+  end
+
   def keys
-    projects = @bucket.objects(prefix: results_folder) || []
-    projects.map do |project|
+    s3_result_objects.map do |project|
       base_name(project.key)
     end
   end
 
   def versions(name)
-    @bucket.object_versions(prefix: full_name(name))
+    bucket.object_versions(prefix: full_name(name))
   end
 
   def file_for(name, version)
     file_data = nil
     begin
-      file_data = @bucket.object(full_name(name)).get(version_id: version)
+      file_data = bucket.object(full_name(name)).get(version_id: version)
     rescue Aws::S3::Errors::InvalidArgument,
            Aws::S3::Errors::NoSuchVersion,
            Aws::S3::Errors::NoSuchKey
