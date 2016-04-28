@@ -21,4 +21,8 @@ group :test, :development do
   gem 'mocha'
 end
 
+group :test do
+  gem 'webmock'
+end
+
 gem 'codeclimate-test-reporter', group: :test, require: nil
