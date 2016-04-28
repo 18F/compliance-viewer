@@ -39,19 +39,10 @@ describe 'ComplianceViewer' do
   end
 
   describe '/results' do
-    it 'returns as expected with the index if authed' do
-      ComplianceData.any_instance.stubs(:keys).returns(%w(abc bcd))
-      get '/results', {},
-          'rack.session' => { user_email: 'example@example.com' }
-      expect(last_response).to be_ok
-      expect(last_response.body).to include('Projects')
-      ComplianceData.any_instance.unstub(:keys)
-    end
-
-    it 'redirects to the auth page if unauthed' do
-      get '/results'
+    it "redirects to the home page" do
+      get '/results', {}, 'rack.session' => { user_email: 'example@example.com' }
       expect(last_response.redirect?).to eq true
-      expect(last_response['Location']).to include('/auth/myusa')
+      expect(last_response['Location']).to eq('http://example.org/')
     end
   end
 
