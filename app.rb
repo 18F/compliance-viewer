@@ -54,7 +54,7 @@ class ComplianceViewer < Sinatra::Base
   end
 
   get '/' do
-    erb :index, locals: { projects: @compliance_data.keys }
+    erb :index, locals: { data: @compliance_data }
   end
 
   get '/results' do

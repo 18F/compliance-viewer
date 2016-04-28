@@ -1,6 +1,19 @@
 <h1>Projects</h1>
-<% for project in projects %>
-  <h2><%= project %></h2>
-  <p><a href="results/<%= project %>/current">View Latest Scan</a></p>
-  <p><a href="results/<%= project %>">History</a></p>
+<% data.s3_summary_objects.each do |s3_object| %>
+  <h2><%= s3_object.key %></h2>
+  <p>
+    <a href="results/<%= s3_object.key %>/current">View Latest Scan</a>
+  </p>
+  <p>
+    <a href="results/<%= s3_object.key %>">History</a>
+  </p>
+  <p>
+    <% summary = JSON.load(s3_object.get.body) %>
+    <% top_level = %w(high medium low informational).find { |level| summary[level] > 0 } %>
+    <% if top_level %>
+      <%= summary[top_level] %> <%= top_level %> alerts
+    <% else %>
+      Scans passing
+    <% end %>
+  </p>
 <% end %>

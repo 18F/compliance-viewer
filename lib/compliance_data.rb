@@ -24,6 +24,10 @@ class ComplianceData
     bucket.objects(prefix: results_folder) || []
   end
 
+  def s3_summary_objects
+    bucket.objects(prefix: 'summaries')
+  end
+
   def keys
     s3_result_objects.map do |project|
       base_name(project.key)
