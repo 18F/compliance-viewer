@@ -17,7 +17,6 @@ gem 'sass'
 group :test, :development do
   gem 'rspec'
   gem 'rubocop'
-  gem 'go_script'
   gem 'simplecov'
   gem 'mocha'
 end

@@ -28,9 +28,6 @@ GEM
     encrypted_cookie (0.0.4)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
-    go_script (0.1.9)
-      bundler (~> 1.10)
-      safe_yaml (~> 1.0)
     hashie (3.4.3)
     jmespath (1.2.4)
       json_pure (>= 1.8.1)
@@ -86,7 +83,6 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.7.5)
-    safe_yaml (1.0.4)
     sass (3.4.21)
     simplecov (0.11.2)
       docile (~> 1.1.0)
@@ -123,7 +119,6 @@ DEPENDENCIES
   cfenv
   codeclimate-test-reporter
   encrypted_cookie
-  go_script
   mocha
   omniauth
   omniauth-myusa!
