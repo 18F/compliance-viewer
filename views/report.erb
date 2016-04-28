@@ -1,4 +1,4 @@
-<link href="../../css/report.css" rel="stylesheet" />
+
 <div class="backlink">
   <a href="/">Project List Page</a>
 </div>
@@ -17,19 +17,23 @@
 </div>
 <div class="scan_results">
   <h2>Current Scan</h2>
-  <p class="updated_at">Updated at <%= project_time %></p>
-  <table>
-    <tr>
-      <th>Type</th>
-      <th>Risk (Confidence)</th>
-      <th>Description</th>
-    </tr>
-    <% for alert, alert_data in report_data['alerts'] %>
+  <p class="updated_at">Updated <time class="time-human-readable" datetime="<%= project_time %>"><%= project_time %></time></p>
+  <table class="table-sortable">
+    <thead>
       <tr>
-        <td><%= alert %></td>
-        <td><%= alert_data['risk'] %> (<%= alert_data['confidence'] %>)</td>
-        <td><%= alert_data['description'] %></td>
+        <th data-sort="string">Type</th>
+        <th data-sort="string">Risk (Confidence)</th>
+        <th>Description</th>
       </tr>
-    <% end %>
+    </thead>
+    <tbody>
+      <% for alert, alert_data in report_data['alerts'] %>
+        <tr>
+          <td><%= alert %></td>
+          <td><%= alert_data['risk'] %> (<%= alert_data['confidence'] %>)</td>
+          <td><%= alert_data['description'] %></td>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
 </div>
