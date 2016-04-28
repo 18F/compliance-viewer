@@ -58,7 +58,7 @@ class ComplianceViewer < Sinatra::Base
   end
 
   get '/results' do
-    erb :index, locals: { projects: @compliance_data.keys }
+    redirect '/'
   end
 
   get '/results/:name' do |name|
@@ -81,6 +81,4 @@ class ComplianceViewer < Sinatra::Base
       'Invalid Version'
     end
   end
-
-
 end
