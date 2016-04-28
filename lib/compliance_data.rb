@@ -28,6 +28,12 @@ class ComplianceData
     bucket.objects(prefix: 'summaries')
   end
 
+  def summaries
+    s3_summary_objects.map do |s3_object|
+      ZapSummary.from_s3_object(s3_object)
+    end
+  end
+
   def keys
     s3_result_objects.map do |project|
       base_name(project.key)

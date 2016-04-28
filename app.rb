@@ -2,10 +2,9 @@ require 'sinatra/base'
 require 'sinatra/reloader'
 require 'json'
 require 'cfenv'
-require_relative 'lib/zap_report'
-require_relative 'lib/compliance_data'
 require 'sprockets'
 require 'sprockets-helpers'
+Dir['lib/*.rb'].each { |file| require_relative file }
 
 class ComplianceViewer < Sinatra::Base
   attr_reader :compliance_data
