@@ -1,6 +1,13 @@
 <h1>Projects</h1>
-<% for project in projects %>
-  <h2><%= project %></h2>
-  <p><a href="results/<%= project %>/current">View Latest Scan</a></p>
-  <p><a href="results/<%= project %>">History</a></p>
+<% data.summaries.each do |summary| %>
+  <h2><%= summary.project_name %></h2>
+  <p>
+    <a href="results/<%= summary.project_name %>/current">View Latest Scan</a>
+  </p>
+  <p>
+    <a href="results/<%= summary.project_name %>">History</a>
+  </p>
+  <p>
+    <%= summary %>
+  </p>
 <% end %>

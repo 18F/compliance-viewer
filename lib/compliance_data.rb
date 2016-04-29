@@ -1,16 +1,15 @@
 require 'aws-sdk'
 require 'cfenv'
+require 'parallel'
 
 class ComplianceData
   attr_reader :bucket
 
   def initialize
-    Aws.config.update(
+    @bucket = Aws::S3::Bucket.new(s3_credentials.bucket,
       region: user_credentials.aws_region,
       credentials: Aws::Credentials.new(s3_credentials.access_key_id, s3_credentials.secret_access_key)
     )
-
-    @bucket = Aws::S3::Bucket.new(s3_credentials.bucket)
   end
 
   def base_name(full_name)
@@ -22,21 +21,36 @@ class ComplianceData
    "#{results_folder}/#{base_name}.json"
   end
 
+  def s3_result_objects
+    bucket.objects(prefix: results_folder) || []
+  end
+
+  def s3_summary_objects
+    bucket.objects(prefix: 'summaries')
+  end
+
+  def summaries
+    # convert to an array so we can get the number of projects
+    objects = s3_summary_objects.to_a
+    Parallel.map(objects, in_threads: objects.size) do |s3_object|
+      ZapSummary.from_s3_object(s3_object)
+    end
+  end
+
   def keys
-    projects = @bucket.objects(prefix: results_folder) || []
-    projects.map do |project|
+    s3_result_objects.map do |project|
       base_name(project.key)
     end
   end
 
   def versions(name)
-    @bucket.object_versions(prefix: full_name(name))
+    bucket.object_versions(prefix: full_name(name))
   end
 
   def file_for(name, version)
     file_data = nil
     begin
-      file_data = @bucket.object(full_name(name)).get(version_id: version)
+      file_data = bucket.object(full_name(name)).get(version_id: version)
     rescue Aws::S3::Errors::InvalidArgument,
            Aws::S3::Errors::NoSuchVersion,
            Aws::S3::Errors::NoSuchKey
