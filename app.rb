@@ -31,7 +31,6 @@ class ComplianceViewer < Sinatra::Base
 
     # cloudgov-style css and js. must be installed before running via `npm install`
     assets.append_path File.join(cloudgov_path, 'css')
-    assets.append_path File.join(cloudgov_path, 'js')
 
     Sprockets::Helpers.configure do |config|
       config.environment = assets
