@@ -21,11 +21,18 @@ class ComplianceViewer < Sinatra::Base
     @compliance_data = ComplianceData.new
   end
 
+  cloudgov_path = File.join(root, 'node_modules', 'cloudgov-style')
+
+  unless Dir.exist?(cloudgov_path)
+    STDERR.puts "Please run `npm install`"
+    exit(1)
+  end
+
   set :assets, Sprockets::Environment.new(root)
 
   configure do
-    assets.append_path File.join(root, 'assets', 'stylesheets')
-    assets.append_path File.join(root, 'assets', 'javascripts')
+    assets.append_path File.join(root, 'assets')
+    assets.append_path File.join(cloudgov_path)
 
     Sprockets::Helpers.configure do |config|
       config.environment = assets
