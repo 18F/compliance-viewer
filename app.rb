@@ -2,10 +2,9 @@ require 'sinatra/base'
 require 'sinatra/reloader'
 require 'json'
 require 'cfenv'
-require_relative 'lib/zap_report'
-require_relative 'lib/compliance_data'
 require 'sprockets'
 require 'sprockets-helpers'
+Dir['lib/*.rb'].each { |file| require_relative file }
 
 class ComplianceViewer < Sinatra::Base
   attr_reader :compliance_data
@@ -22,11 +21,18 @@ class ComplianceViewer < Sinatra::Base
     @compliance_data = ComplianceData.new
   end
 
+  cloudgov_path = File.join(root, 'node_modules', 'cloudgov-style')
+
+  unless Dir.exist?(cloudgov_path)
+    STDERR.puts "Please run `npm install`"
+    exit(1)
+  end
+
   set :assets, Sprockets::Environment.new(root)
 
   configure do
-    assets.append_path File.join(root, 'assets', 'stylesheets')
-    assets.append_path File.join(root, 'assets', 'javascripts')
+    assets.append_path File.join(root, 'assets')
+    assets.append_path File.join(cloudgov_path)
 
     Sprockets::Helpers.configure do |config|
       config.environment = assets
@@ -54,11 +60,11 @@ class ComplianceViewer < Sinatra::Base
   end
 
   get '/' do
-    erb :index, locals: { projects: @compliance_data.keys }
+    erb :index, locals: { data: @compliance_data }
   end
 
   get '/results' do
-    erb :index, locals: { projects: @compliance_data.keys }
+    redirect '/'
   end
 
   get '/results/:name' do |name|
@@ -86,6 +92,4 @@ class ComplianceViewer < Sinatra::Base
       'Invalid Version'
     end
   end
-
-
 end
