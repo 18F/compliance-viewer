@@ -22,11 +22,16 @@ class ComplianceViewer < Sinatra::Base
     @compliance_data = ComplianceData.new
   end
 
+  cloudgov_path = File.join(root, 'node_modules', 'cloudgov-style')
   set :assets, Sprockets::Environment.new(root)
 
   configure do
     assets.append_path File.join(root, 'assets', 'stylesheets')
     assets.append_path File.join(root, 'assets', 'javascripts')
+
+    # cloudgov-style css and js. must be installed before running via `npm install`
+    assets.append_path File.join(cloudgov_path, 'css')
+    assets.append_path File.join(cloudgov_path, 'js')
 
     Sprockets::Helpers.configure do |config|
       config.environment = assets
@@ -41,6 +46,14 @@ class ComplianceViewer < Sinatra::Base
 
   before do
     cache_control :public, :must_revalidate, :max_age => 60
+  end
+
+  get '/img/:file' do |file|
+    send_file File.join(cloudgov_path, 'img', file)
+  end
+
+  get '/font/:file' do |file|
+    send_file File.join(cloudgov_path, 'font', file)
   end
 
   get '/auth/myusa/callback' do
