@@ -22,6 +22,9 @@ ENV['RACK_ENV'] = 'test'
 require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start
 
+require 'webmock'
+WebMock.disable_net_connect!(allow: 'codeclimate.com')
+
 require_relative '../app'
 require_relative '../lib/zap_report'
 
