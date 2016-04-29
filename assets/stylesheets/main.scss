@@ -1,3 +1,6 @@
+
+$cg-blue: #1f2c38;
+
 .usa-disclaimer {
   color: black;
 }
@@ -32,6 +35,17 @@
 .sidenav-parent {
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+
+.statusbar {
+  background-color: $cg-blue;
+  width: 100%;
+  padding: 1rem;
+  color: #fff;
+
+  .updated_at {
+    float: right;
+  }
 }
 
 .cv-footer {
