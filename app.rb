@@ -32,9 +32,8 @@ class ComplianceViewer < Sinatra::Base
   set :assets, Sprockets::Environment.new(root)
 
   configure do
-    assets.append_path File.join(root, 'assets', 'stylesheets')
-    assets.append_path File.join(root, 'assets', 'javascripts')
-    assets.append_path File.join(cloudgov_path, 'css')
+    assets.append_path File.join(root, 'assets')
+    assets.append_path File.join(cloudgov_path)
 
     Sprockets::Helpers.configure do |config|
       config.environment = assets
@@ -49,14 +48,6 @@ class ComplianceViewer < Sinatra::Base
 
   before do
     cache_control :public, :must_revalidate, :max_age => 60
-  end
-
-  get '/img/:file' do |file|
-    send_file File.join(cloudgov_path, 'img', file)
-  end
-
-  get '/fonts/:file' do |file|
-    send_file File.join(cloudgov_path, 'font', file)
   end
 
   get '/auth/myusa/callback' do
