@@ -51,7 +51,7 @@ class ComplianceViewer < Sinatra::Base
     send_file File.join(cloudgov_path, 'img', file)
   end
 
-  get '/font/:file' do |file|
+  get '/fonts/:file' do |file|
     send_file File.join(cloudgov_path, 'font', file)
   end
 
