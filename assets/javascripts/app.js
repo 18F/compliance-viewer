@@ -5,7 +5,7 @@
 (function($) {
 
   //Format <time> elements
-  $('.time-human-readable').each(function (){
+  $('.js-time-human-readable').each(function (){
     $(this).text(moment().calendar($(this).attr('datetime'), {
       sameDay: '[today at] LT',
       lastDay: '[yesterday at] LT',
@@ -14,6 +14,6 @@
   });
 
   //Make tables sortable
-  $('.table-sortable').stupidtable();
+  $('.js-table-sortable').stupidtable();
 
 })(jQuery);
