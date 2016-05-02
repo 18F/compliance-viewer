@@ -3,7 +3,13 @@
   <a href="/">&#8592; Project List Page</a>
 </div>
 <div class="statusbar">
-  All scans passing <span class="statusbar__updated_at">Updated <time class="js-time-human-readable" datetime="<%= project_time %>"><%= project_time %></time></span>
+  <% alert_count = report_data['alerts'].length %>
+  <% if alert_count == 0 %>
+    All scans passing
+  <% else %>
+    Scans returned <%= alert_count %> error<% if alert_count > 1 %>s<% end %>
+  <% end %>
+  <span class="statusbar__updated_at">Updated <time class="js-time-human-readable" datetime="<%= project_time %>"><%= project_time %></time></span>
 </div>
 <h1><%= project_name %></h1>
 <div class="getting_started">
