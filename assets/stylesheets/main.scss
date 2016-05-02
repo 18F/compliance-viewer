@@ -42,14 +42,58 @@ $cg-blue: #1f2c38;
   width: 100%;
   padding: 1rem;
   color: #fff;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 
-  .updated_at {
+  .statusbar__updated_at {
     float: right;
   }
 }
 
+.getting_started {
+  margin-top: 1rem;
+}
+
+.updated_at {
+  font-style: italic;
+}
+
 .download_data {
   float: right;
+}
+
+table {
+  th[data-sort] {
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .sorting-asc::after,
+  .sorting-desc:after {
+    content: '';
+    display: inline-block;
+    margin-left: 4px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+  }
+
+  .sorting-asc::after {
+    border-bottom: 10px solid #fff;
+  }
+
+  .sorting-desc::after {
+    border-top: 10px solid #fff;
+  }
+}
+
+.alerts-table {
+  .alerts-table_type {
+    min-width: 240px;
+  }
+
+  .alerts-table_risk {
+    min-width: 200px;
+  }
 }
 
 .cv-footer {
