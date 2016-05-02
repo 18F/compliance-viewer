@@ -10,9 +10,10 @@ module StubClasses
   end
 
   class StubFile
-    attr_reader :body
+    attr_reader :body, :last_modified
     def initialize(alerts = [])
       @body = StubBody.new(alerts)
+      @last_modified = Time.now
     end
   end
 
