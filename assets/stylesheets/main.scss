@@ -86,6 +86,16 @@ table {
   }
 }
 
+.alerts-table {
+  .alerts-table_type {
+    min-width: 240px;
+  }
+
+  .alerts-table_risk {
+    min-width: 200px;
+  }
+}
+
 .cv-footer {
   background: white;
   padding: 2rem;
