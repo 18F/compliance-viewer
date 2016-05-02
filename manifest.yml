@@ -1,5 +1,5 @@
 ---
-buildpack: "https://github.com/ozzyjohnson/heroku-buildpack-multi.git"
+buildpack: ruby_buildpack
 applications:
 - name: compliance-viewer
   memory: 512M
@@ -9,4 +9,5 @@ applications:
   services:
     - s3-compliance-toolkit
     - compliance-viewer-env # This service is User Provided, and functions as ENV vars.
-  command: bin/run.sh 
+  command: rackup -p $PORT -E production
+
