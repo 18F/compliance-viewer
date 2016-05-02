@@ -17,6 +17,11 @@
 </div>
 <div class="scan_results">
   <h2>Current Scan</h2>
+  <div class="download_data">
+    <a class="usa-button" href="/results/<%= project_name %>/<%= project_version %>?format=json" title="Download scan data" download>
+      Download scan data (.json)
+    </a>
+  </div>
   <p class="updated_at">Updated <time class="js-time-human-readable" datetime="<%= project_time %>"><%= project_time %></time></p>
   <table class="js-table-sortable">
     <thead>
