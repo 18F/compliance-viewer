@@ -81,7 +81,6 @@ class ComplianceViewer < Sinatra::Base
         attachment "#{name}.json"
         @compliance_data.json_for file_data
       else
-        puts name, file_data.last_modified
         erb :report, locals: {
           report_data: ZapReport.create_report(file_data),
           project_name: name,
