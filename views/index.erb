@@ -1,13 +1,30 @@
-<h1>Projects</h1>
-<% data.summaries.each do |summary| %>
-  <h2><%= summary.project_name %></h2>
+<div class="welcome_message">
+  <h2>Welcome to the Compliance Viewer</h2>
   <p>
-    <a href="results/<%= summary.project_name %>/current">View Latest Scan</a>
+    Compliance Viewer aims to make the ATO process and regulatory compliance more tangible, actionable, and transparent for project teams. It does this by automating processes that can be automated and assisting with the parts that require a human touch. The current focus of the site is on automated scanning of web applications, but the scope will expand as the project evolves.
   </p>
   <p>
-    <a href="results/<%= summary.project_name %>">History</a>
+    Do you see your project below? Click on it to get started. Click on &quot;New Project?&quot; above to get it on the list, or click on &quot;Documentation&quot; to view the &quot;Before You Ship&quot; guide.
   </p>
-  <p>
-    <%= summary %>
-  </p>
-<% end %>
+</div>
+
+<h2>Projects</h2>
+<table class="projects-table js-table-sortable">
+  <thead>
+    <tr>
+      <th data-sort="string">Project Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for summary in data.summaries %>
+      <tr>
+        <td>
+          <a href="results/<%= summary.project_name %>" title="Details for <%= summary.project_name %>">
+            <%= summary.project_name %>
+            <span class="projects-table_scan-summary"><%= summary %></span>
+          </a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
