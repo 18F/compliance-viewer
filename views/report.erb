@@ -31,11 +31,8 @@
   <p class="updated_at">Updated <time class="js-time-human-readable" datetime="<%= project_time %>"><%= project_time %></time></p>
 
   <% if alert_count == 0 %>
-    <div class="usa-alert usa-alert-success">
-      <div class="usa-alert-body">
-        <h3 class="usa-alert-heading">Success</h3>
-        <p class="usa-alert-text">All scans passing</p>
-      </div>
+    <div class="usa-alert usa-alert-success usa-alert-all-passing">
+      <p class="usa-alert-text">All scans passing</p>
     </div>
   <% else %>
     <table class="alerts-table js-table-sortable">
