@@ -1,12 +1,9 @@
-
-$cg-blue: #1f2c38;
-
 .usa-alert-all-passing {
   background-image: none;
 }
 
 .usa-disclaimer {
-  color: black;
+  color: #000000;
 }
 
 .usa-disclaimer-stage {
@@ -18,14 +15,14 @@ $cg-blue: #1f2c38;
 }
 
 .logo {
-  width: auto;
   float: left;
-}
+  width: auto;
 
-.logo h1 a {
-  text-decoration: none;
-  font-size: 2rem;
-  color: #595959;
+  h1 a {
+    color: #595959;
+    font-size: 2rem;
+    text-decoration: none;
+  }
 }
 
 .nav {
@@ -59,12 +56,12 @@ $cg-blue: #1f2c38;
 
 
 .statusbar {
-  background-color: $cg-blue;
-  width: 100%;
-  padding: 1rem;
+  background-color: #1f2c38;
   color: #fff;
   margin-top: 2rem;
   margin-bottom: 2rem;
+  padding: 1rem;
+  width: 100%;
 
   .statusbar__updated_at {
     float: right;
@@ -91,11 +88,11 @@ table {
 
   .sorting-asc::after,
   .sorting-desc:after {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
     content: '';
     display: inline-block;
     margin-left: 4px;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
   }
 
   .sorting-asc::after {
@@ -117,31 +114,21 @@ table {
   }
 }
 
-.cv-footer {
-  background: white;
-  padding: 2rem;
-  position: relative;
-}
+.usa-footer {
 
-.usa-footer-slim-logo-img {
-  max-width: 4rem;
-}
+  .usa-footer-primary-section {
+    padding: 2em 0;
+  }
 
-.usa-footer-slim-logo-heading {
-  padding-top: 1rem;
-}
+  .usa-footer-logo-heading {
+    display: inline;
+    margin: 0;
+    position: relative;
+    top: -15px;
+  }
 
-.cv-footer-github {
-  float: right;
-}
-
-.cv-footer-github-img {
-  float: right;
-  max-width: 3rem;
-  padding-top: 1rem;
-}
-
-.cv-footer-github-link {
-  padding-top: 2rem;
-  padding-right: 1rem;
+  .usa-social-links img {
+    position: relative;
+    top: 10px;
+  }
 }
