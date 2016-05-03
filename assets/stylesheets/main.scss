@@ -37,6 +37,23 @@ $cg-blue: #1f2c38;
   padding-bottom: 2rem;
 }
 
+.projects-table {
+
+  td {
+    padding: 0;
+  }
+
+  a {
+    display: block;
+    padding: 1.5em;
+  }
+
+  .projects-table_scan-summary {
+    float: right;
+  }
+}
+
+
 .statusbar {
   background-color: $cg-blue;
   width: 100%;
