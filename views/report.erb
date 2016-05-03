@@ -29,22 +29,33 @@
     </a>
   </div>
   <p class="updated_at">Updated <time class="js-time-human-readable" datetime="<%= project_time %>"><%= project_time %></time></p>
-  <table class="alerts-table js-table-sortable">
-    <thead>
-      <tr>
-        <th class="alerts-table_type" data-sort="string" scope="col">Type</th>
-        <th class="alerts-table_risk" data-sort="string" scope="col">Risk (Confidence)</th>
-        <th scope="col">Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for alert, alert_data in report_data['alerts'] %>
+
+  <% if alert_count == 0 %>
+    <div class="usa-alert usa-alert-success">
+      <div class="usa-alert-body">
+        <h3 class="usa-alert-heading">Success</h3>
+        <p class="usa-alert-text">All scans passing</p>
+      </div>
+    </div>
+  <% else %>
+    <table class="alerts-table js-table-sortable">
+      <thead>
         <tr>
-          <td><%= alert %></td>
-          <td><%= alert_data['risk'] %> (<%= alert_data['confidence'] %>)</td>
-          <td><%= alert_data['description'] %></td>
+          <th class="alerts-table_type" data-sort="string" scope="col">Type</th>
+          <th class="alerts-table_risk" data-sort="string" scope="col">Risk (Confidence)</th>
+          <th scope="col">Description</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% for alert, alert_data in report_data['alerts'] %>
+          <tr>
+            <td><%= alert %></td>
+            <td><%= alert_data['risk'] %> (<%= alert_data['confidence'] %>)</td>
+            <td><%= alert_data['description'] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
 </div>
