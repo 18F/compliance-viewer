@@ -1,7 +1,6 @@
 
-<div class="backlink">
-  <a href="/">&#8592; Project List Page</a>
-</div>
+<a href="/">&#8592; Project List Page</a>
+
 <div class="statusbar">
   <% alert_count = report_data['alerts'].length %>
   <% if alert_count == 0 %>
@@ -11,6 +10,7 @@
   <% end %>
   <span class="statusbar__updated_at">Updated <time class="js-time-human-readable" datetime="<%= project_time %>"><%= project_time %></time></span>
 </div>
+
 <h1><%= project_name %></h1>
 <div class="getting_started">
   <h2>Getting Started</h2>
