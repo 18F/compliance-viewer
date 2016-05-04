@@ -1,7 +1,6 @@
 
-<div class="backlink">
-  <a href="/">&#8592; Project List Page</a>
-</div>
+<a href="/">&#8592; Project List Page</a>
+
 <div class="statusbar">
   <% alert_count = report_data['alerts'].length %>
   <% if alert_count == 0 %>
@@ -11,10 +10,11 @@
   <% end %>
   <span class="statusbar__updated_at">Updated <time class="js-time-human-readable" datetime="<%= project_time %>"><%= project_time %></time></span>
 </div>
+
 <h1><%= project_name %></h1>
 <div class="getting_started">
   <h2>Getting Started</h2>
-  <p>Compliance is both a process and a conversation. To ensure that the goes smoothly, the project team should start at the beginning of the project, not just ‘before you ship’. Below are the steps that need to be performed.</p>
+  <p>When it comes down to it, compliance is a conversation. To ensure that the conversation goes smoothly, your team should start the compliance process at the outset of your project, not right before you ship. Here are the steps you need to take to ensure your project is compliant:</p>
   <ul>
     <li><a href="https://pages.18f.gov/before-you-ship/" title="Before You Ship">Read the &quot;Before You Ship&quot; ATO walk through</a></li>
     <li><a href="https://pages.18f.gov/before-you-ship/ato/checklist/">Open a GitHub issue using the ATO checklist</a></li>
@@ -29,28 +29,35 @@
     </a>
   </div>
   <p class="updated_at">Updated <time class="js-time-human-readable" datetime="<%= project_time %>"><%= project_time %></time></p>
-  <table class="alerts-table js-table-sortable">
-    <thead>
-      <tr>
-        <th class="alerts-table_type" data-sort="string" scope="col">
-          Type
-        </th>
-        <th class="alerts-table_risk js-default-sort" data-sort="risk" data-sort-default="desc" scope="col">
-          Risk (Confidence)
-        </th>
-        <th scope="col">Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for alert, alert_data in report_data['alerts'] %>
+  <% if alert_count == 0 %>
+    <div class="usa-alert usa-alert-success usa-alert-all-passing">
+      <p class="usa-alert-text">All scans passing</p>
+    </div>
+  <% else %>
+    <table class="alerts-table js-table-sortable">
+      <thead>
         <tr>
-          <td><%= alert %></td>
-          <td data-sort-value="<%= alert_data['risk'] %>">
-            <%= alert_data['risk'] %> (<%= alert_data['confidence'] %>)
-          </td>
-          <td><%= alert_data['description'] %></td>
+          <th class="alerts-table_type" data-sort="string" scope="col">
+            Type
+          </th>
+          <th class="alerts-table_risk js-default-sort" data-sort="risk" data-sort-default="desc" scope="col">
+            Risk (Confidence)
+          </th>
+          <th scope="col">Description</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% for alert, alert_data in report_data['alerts'] %>
+          <tr>
+            <td><%= alert %></td>
+            <td data-sort-value="<%= alert_data['risk'] %>">
+              <%= alert_data['risk'] %> (<%= alert_data['confidence'] %>)
+            </td>
+            <td><%= alert_data['description'] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
 </div>
