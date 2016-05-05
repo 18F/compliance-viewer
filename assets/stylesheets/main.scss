@@ -1,5 +1,13 @@
-.usa-alert-all-passing {
+.usa-alert-no-icon {
   background-image: none;
+}
+
+.usa-alert-statusbar {
+  margin-bottom: 1.5rem;
+}
+
+.usa-alert__updated-at {
+  float: right;
 }
 
 .usa-disclaimer {
@@ -50,20 +58,6 @@
   }
 
   .projects-table_scan-summary {
-    float: right;
-  }
-}
-
-
-.statusbar {
-  background-color: #1f2c38;
-  color: #fff;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  padding: 1rem;
-  width: 100%;
-
-  .statusbar__updated_at {
     float: right;
   }
 }

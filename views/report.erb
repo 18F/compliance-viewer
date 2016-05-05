@@ -1,14 +1,18 @@
 
 <a href="/">&#8592; Project List Page</a>
 
-<div class="statusbar">
-  <% alert_count = report_data['alerts'].length %>
-  <% if alert_count == 0 %>
-    All scans passing
-  <% else %>
-    Scans returned <%= alert_count %> error<% if alert_count > 1 %>s<% end %>
-  <% end %>
-  <span class="statusbar__updated_at">Updated <time class="js-time-human-readable" datetime="<%= project_time %>"><%= project_time %></time></span>
+<% alert_count = report_data['alerts'].length %>
+<div class="usa-alert usa-alert-statusbar usa-alert-no-icon <%= alert_count == 0 ? 'usa-alert-success' : 'usa-alert-warning' %>">
+  <div class="usa-alert-text">
+    <p class="usa-alert-text">
+      <% if alert_count == 0 %>
+        All scans passing
+      <% else %>
+        Scans returned <%= alert_count %> error<% if alert_count > 1 %>s<% end %>
+      <% end %>
+      <span class="usa-alert__updated-at">Updated <time class="js-time-human-readable" datetime="<%= project_time %>"><%= project_time %></time></span>
+    </p>
+  </div>
 </div>
 
 <h1><%= project_name %></h1>
@@ -30,7 +34,7 @@
   </div>
   <p class="updated_at">Updated <time class="js-time-human-readable" datetime="<%= project_time %>"><%= project_time %></time></p>
   <% if alert_count == 0 %>
-    <div class="usa-alert usa-alert-success usa-alert-all-passing">
+    <div class="usa-alert usa-alert-success usa-alert-no-icon">
       <p class="usa-alert-text">All scans passing</p>
     </div>
   <% else %>
