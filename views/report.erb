@@ -53,7 +53,21 @@
             <td data-sort-value="<%= alert_data['risk'] %>">
               <%= alert_data['risk'] %> (<%= alert_data['confidence'] %>)
             </td>
-            <td><%= alert_data['description'] %></td>
+            <td>
+              <%= alert_data['description'] %>
+              <div class="usa-accordion">
+                <button class="usa-button-unstyled" aria-expanded="true" aria-controls="collapsible-<%= alert_data['id'] %>">
+                  <%= alert_data['instances'].length %> occurrence<% if alert_data['instances'].count > 1 %>s<% end %>
+                </button>
+                <div id="collapsible-<%= alert_data['id'] %>" class="usa-accordion-content">
+                  <ul>
+                    <% for instance in alert_data['instances'] %>
+                      <li><%= truncate instance['url'] %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            </td>
           </tr>
         <% end %>
       </tbody>

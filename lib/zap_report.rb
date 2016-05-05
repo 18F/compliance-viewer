@@ -37,7 +37,8 @@ module ZapReport
       'other' => alert_data['other'],
       'reference' => alert_data['reference'],
       'cweid' => alert_data['cweid'],
-      'wascid' => alert_data['wascid']
+      'wascid' => alert_data['wascid'],
+      'id' => alert_data['id']
     }
   end
 
@@ -45,5 +46,13 @@ module ZapReport
     levels = Hash.new 0
     (file_data || []).each { |a| levels[a['risk']] += 1 }
     levels
+  end
+
+  def truncate(data)
+    if data.size > 49
+      data[0..49] + '&hellip;'
+    else
+      data
+    end
   end
 end

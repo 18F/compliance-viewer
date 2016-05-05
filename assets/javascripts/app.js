@@ -1,6 +1,7 @@
 // assets/javascripts/app.js
 
 //= require_tree .
+//= require 'js/uswds.js'
 
 (function($) {
 
@@ -30,5 +31,6 @@
 
   //Apply default sort to columns
   $('.js-default-sort').stupidsort();
+
 
 })(jQuery);

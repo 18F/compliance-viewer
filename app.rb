@@ -21,6 +21,7 @@ class ComplianceViewer < Sinatra::Base
     @compliance_data = ComplianceData.new
   end
 
+  uswds_path = File.join(root, 'node_modules', 'uswds', 'dist')
   cloudgov_path = File.join(root, 'node_modules', 'cloudgov-style')
 
   unless Dir.exist?(cloudgov_path)
@@ -32,6 +33,7 @@ class ComplianceViewer < Sinatra::Base
 
   configure do
     assets.append_path File.join(root, 'assets')
+    assets.append_path File.join(uswds_path)
     assets.append_path File.join(cloudgov_path)
 
     Sprockets::Helpers.configure do |config|
