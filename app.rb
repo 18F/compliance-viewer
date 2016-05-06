@@ -34,6 +34,11 @@ class ComplianceViewer < Sinatra::Base
     assets.append_path File.join(root, 'assets')
     assets.append_path File.join(cloudgov_path)
 
+    # minify javascript when in production
+    if Sinatra::Base.production?
+      assets.js_compressor  = :uglify
+    end
+
     Sprockets::Helpers.configure do |config|
       config.environment = assets
       config.prefix      = '/assets'
