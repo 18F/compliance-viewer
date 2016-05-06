@@ -59,7 +59,10 @@
             <td data-sort-value="<%= alert_data['risk'] %>">
               <%= alert_data['risk'] %> (<%= alert_data['confidence'] %>)
             </td>
-            <td><%= alert_data['description'] %></td>
+            <td>
+              <%= alert_data['description'] %>
+              <a href="/results/<%= project_name %>/<%= project_version %>?format=json" title="Download scan data" download> Download scan data (.json)</a>
+            </td>
           </tr>
         <% end %>
       </tbody>
