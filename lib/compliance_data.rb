@@ -8,17 +8,16 @@ class ComplianceData
   def initialize
     @bucket = Aws::S3::Bucket.new(s3_credentials.bucket,
       region: user_credentials.aws_region,
-      credentials: Aws::Credentials.new(s3_credentials.access_key_id, s3_credentials.secret_access_key)
-    )
+      credentials: Aws::Credentials.new(s3_credentials.access_key_id, s3_credentials.secret_access_key))
   end
 
   def base_name(full_name)
-   File.basename (full_name || ''), '.json'
+    File.basename (full_name || ''), '.json'
   end
 
   def full_name(base_name)
-   return '' if base_name.nil?
-   "#{results_folder}/#{base_name}.json"
+    return '' if base_name.nil?
+    "#{results_folder}/#{base_name}.json"
   end
 
   def s3_result_objects

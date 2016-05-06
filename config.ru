@@ -19,11 +19,11 @@ use Rack::Session::EncryptedCookie, cookie_settings
 
 use OmniAuth::Builder do
   provider :myusa, creds.app_id, creds.app_secret,
-           scope: 'profile.email',
-           client_options: {
-             site: 'https://alpha.my.usa.gov',
-             token_url: '/oauth/token'
-           }
+    scope: 'profile.email',
+    client_options: {
+      site: 'https://alpha.my.usa.gov',
+      token_url: '/oauth/token'
+    }
 end
 
 map '/assets' do

@@ -1,2 +1,29 @@
-inherit_from:
-- https://raw.githubusercontent.com/18F/concourse-compliance-testing/master/.rubocop.yml
+# Same as https://raw.githubusercontent.com/18F/concourse-compliance-testing/master/.rubocop.yml, but can not be inherited, because then it would require a network connection.
+AllCops:
+  Exclude:
+    - 'node_modules/**/*'
+Metrics/LineLength:
+  Enabled: false
+Style/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+Style/CommentAnnotation:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/DotPosition:
+  Enabled: false
+Style/EmptyElse:
+  Enabled: false
+Style/GuardClause:
+  Enabled: false
+Style/IfUnlessModifier:
+  # inline conditionals don't get picked up by simplecov, so preferable to avoid them
+  Enabled: false
+Style/IndentArray:
+  Enabled: false
+Style/RedundantBegin:
+  Enabled: false
+Style/SignalException:
+  Enabled: false
+Style/StringLiterals:
+  Enabled: false

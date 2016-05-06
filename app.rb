@@ -46,7 +46,7 @@ class ComplianceViewer < Sinatra::Base
   end
 
   before do
-    cache_control :public, :must_revalidate, :max_age => 60
+    cache_control :public, :must_revalidate, max_age: 60
   end
 
   get '/auth/myusa/callback' do
