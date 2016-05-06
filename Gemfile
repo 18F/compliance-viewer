@@ -14,6 +14,7 @@ gem 'parallel'
 gem 'sprockets'
 gem 'sprockets-helpers'
 gem 'sass'
+gem 'uglifier'
 
 group :test, :development do
   gem 'rspec'
