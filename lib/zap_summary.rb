@@ -24,6 +24,6 @@ class ZapSummary
   def self.from_s3_object(s3_object)
     name = File.basename(s3_object.key, '.json')
     data = JSON.load(s3_object.get.body)
-    self.new(name, data)
+    new(name, data)
   end
 end

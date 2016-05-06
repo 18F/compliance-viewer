@@ -57,8 +57,7 @@ describe 'ComplianceViewer' do
           StubClasses::StubObjectVersion.new(name)
         ])
       )
-      get "/results/#{name}", {},
-          'rack.session' => { user_email: 'example@example.com' }
+      get "/results/#{name}", {}, 'rack.session' => { user_email: 'example@example.com' }
       expect(last_response).to be_ok
       expect(last_response.body).to include(name)
       ComplianceData.any_instance.unstub(:base_name)
@@ -68,8 +67,7 @@ describe 'ComplianceViewer' do
     it 'returns Invalid Project if passed a name that doesn\'t exist' do
       ComplianceData.any_instance.stubs(:versions).returns(
         StubClasses::StubCollection.new)
-      get "/results/name", {},
-          'rack.session' => { user_email: 'example@example.com' }
+      get "/results/name", {}, 'rack.session' => { user_email: 'example@example.com' }
       expect(last_response).to be_ok
       expect(last_response.body).to include('Invalid Project')
       ComplianceData.any_instance.unstub(:versions)
@@ -92,8 +90,7 @@ describe 'ComplianceViewer' do
     it 'returns successfully if passed a name and version that exists' do
       ComplianceData.any_instance.stubs(:file_for).returns(
         StubClasses::StubFile.new)
-      get "/results/good/good", {},
-          'rack.session' => { user_email: 'example@example.com' }
+      get "/results/good/good", {}, 'rack.session' => { user_email: 'example@example.com' }
       expect(last_response).to be_ok
       ComplianceData.any_instance.unstub(:file_for)
     end
@@ -101,8 +98,7 @@ describe 'ComplianceViewer' do
     it 'returns successfully in JSON' do
       ComplianceData.any_instance.stubs(:file_for).returns(
         StubClasses::StubFile.new)
-      get "/results/good/good?format=json", {},
-          'rack.session' => { user_email: 'example@example.com' }
+      get "/results/good/good?format=json", {}, 'rack.session' => { user_email: 'example@example.com' }
       expect(last_response).to be_ok
       ComplianceData.any_instance.unstub(:file_for)
     end
@@ -110,16 +106,14 @@ describe 'ComplianceViewer' do
     it 'returns successfully if passed a name and current version' do
       ComplianceData.any_instance.stubs(:file_for).returns(
         StubClasses::StubFile.new)
-      get "/results/good/current", {},
-          'rack.session' => { user_email: 'example@example.com' }
+      get "/results/good/current", {}, 'rack.session' => { user_email: 'example@example.com' }
       expect(last_response).to be_ok
       ComplianceData.any_instance.unstub(:file_for)
     end
 
     it 'returns Invalid Version if passed a version that doesn\'t exist' do
       ComplianceData.any_instance.stubs(:file_for).returns nil
-      get '/results/good/bad', {},
-          'rack.session' => { user_email: 'example@example.com' }
+      get '/results/good/bad', {}, 'rack.session' => { user_email: 'example@example.com' }
       expect(last_response).to be_ok
       expect(last_response.body).to include('Invalid Version')
       ComplianceData.any_instance.unstub(:file_for)

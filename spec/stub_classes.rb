@@ -47,5 +47,4 @@ module StubClasses
       @items.each(&block)
     end
   end
-
 end

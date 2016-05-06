@@ -5,8 +5,7 @@ describe ZapSummary do
         'high' => 0,
         'medium' => 2,
         'low' => 7,
-        'informational' => 8
-      )
+        'informational' => 8)
       expect(summary.top_level).to eq('medium')
     end
 
@@ -15,8 +14,7 @@ describe ZapSummary do
         'high' => 0,
         'medium' => 0,
         'low' => 0,
-        'informational' => 0
-      )
+        'informational' => 0)
       expect(summary.top_level).to eq(nil)
     end
   end
