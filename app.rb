@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/reloader'
+require 'sinatra/json'
 require 'json'
 require 'cfenv'
 require 'sprockets'
@@ -83,8 +84,7 @@ class ComplianceViewer < Sinatra::Base
     file_data = @compliance_data.file_for(name, version)
     if file_data
       if params['format'] == 'json'
-        attachment "#{name}.json"
-        @compliance_data.json_for file_data
+        json JSON.parse @compliance_data.json_for file_data
       else
         erb :report, locals: {
           report_data: ZapReport.create_report(file_data),
