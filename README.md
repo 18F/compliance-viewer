@@ -22,7 +22,7 @@ Run `npm intall` to install the cloudgov-style assets.
 We provide environment variables via [User Provided Services](https://docs.cloudfoundry.org/devguide/services/user-provided.html). You can set them all interactively.
 
 ```bash
-cf cups compliance-viewer-env -p "cookie_secret, aws_region, results_folder"
+cf cups compliance-viewer-env -p "aws_region, results_folder"
 ```
 
 The `cf env` command can be used to verify that ENV vars have been set. Use `cf uups` to update existing values.
