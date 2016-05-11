@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'rack/test'
-require 'omniauth-myusa'
 require 'stub_classes'
 
 describe 'ComplianceViewer' do
@@ -23,24 +22,18 @@ describe 'ComplianceViewer' do
   end
 
   describe '/' do
-    it 'returns as expected with the index if authed' do
+    it "renders the index" do
       ComplianceData.any_instance.stubs(:keys).returns(%w(abc bcd))
-      get '/', {}, 'rack.session' => { user_email: 'example@example.com' }
+      get '/'
       expect(last_response).to be_ok
       expect(last_response.body).to include('Projects')
       ComplianceData.any_instance.unstub(:keys)
-    end
-
-    it 'redirects to the auth page if unauthed' do
-      get '/'
-      expect(last_response.redirect?).to eq true
-      expect(last_response['Location']).to include('/auth/myusa')
     end
   end
 
   describe '/results' do
     it "redirects to the home page" do
-      get '/results', {}, 'rack.session' => { user_email: 'example@example.com' }
+      get '/results'
       expect(last_response.redirect?).to eq true
       expect(last_response['Location']).to eq('http://example.org/')
     end
@@ -57,7 +50,7 @@ describe 'ComplianceViewer' do
           StubClasses::StubObjectVersion.new(name)
         ])
       )
-      get "/results/#{name}", {}, 'rack.session' => { user_email: 'example@example.com' }
+      get "/results/#{name}"
       expect(last_response).to be_ok
       expect(last_response.body).to include(name)
       ComplianceData.any_instance.unstub(:base_name)
@@ -67,22 +60,10 @@ describe 'ComplianceViewer' do
     it 'returns Invalid Project if passed a name that doesn\'t exist' do
       ComplianceData.any_instance.stubs(:versions).returns(
         StubClasses::StubCollection.new)
-      get "/results/name", {}, 'rack.session' => { user_email: 'example@example.com' }
+      get "/results/name"
       expect(last_response).to be_ok
       expect(last_response.body).to include('Invalid Project')
       ComplianceData.any_instance.unstub(:versions)
-    end
-
-    it 'redirects to the auth page if unauthed with a name' do
-      get '/results/name'
-      expect(last_response.redirect?).to eq true
-      expect(last_response['Location']).to include('/auth/myusa')
-    end
-
-    it 'redirects to the auth page if unauthed without a name' do
-      get '/results/'
-      expect(last_response.redirect?).to eq true
-      expect(last_response['Location']).to include('/auth/myusa')
     end
   end
 
@@ -90,7 +71,7 @@ describe 'ComplianceViewer' do
     it 'returns successfully if passed a name and version that exists' do
       ComplianceData.any_instance.stubs(:file_for).returns(
         StubClasses::StubFile.new)
-      get "/results/good/good", {}, 'rack.session' => { user_email: 'example@example.com' }
+      get "/results/good/good"
       expect(last_response).to be_ok
       ComplianceData.any_instance.unstub(:file_for)
     end
@@ -98,7 +79,7 @@ describe 'ComplianceViewer' do
     it 'returns successfully in JSON' do
       ComplianceData.any_instance.stubs(:file_for).returns(
         StubClasses::StubFile.new)
-      get "/results/good/good?format=json", {}, 'rack.session' => { user_email: 'example@example.com' }
+      get "/results/good/good?format=json"
       expect(last_response).to be_ok
       ComplianceData.any_instance.unstub(:file_for)
     end
@@ -106,23 +87,17 @@ describe 'ComplianceViewer' do
     it 'returns successfully if passed a name and current version' do
       ComplianceData.any_instance.stubs(:file_for).returns(
         StubClasses::StubFile.new)
-      get "/results/good/current", {}, 'rack.session' => { user_email: 'example@example.com' }
+      get "/results/good/current"
       expect(last_response).to be_ok
       ComplianceData.any_instance.unstub(:file_for)
     end
 
     it 'returns Invalid Version if passed a version that doesn\'t exist' do
       ComplianceData.any_instance.stubs(:file_for).returns nil
-      get '/results/good/bad', {}, 'rack.session' => { user_email: 'example@example.com' }
+      get '/results/good/bad'
       expect(last_response).to be_ok
       expect(last_response.body).to include('Invalid Version')
       ComplianceData.any_instance.unstub(:file_for)
-    end
-
-    it 'redirects to the auth page if unauthed' do
-      get '/results/name/version'
-      expect(last_response.redirect?).to eq true
-      expect(last_response['Location']).to include('/auth/myusa')
     end
   end
 end
