@@ -11,12 +11,6 @@ class ComplianceViewer < Sinatra::Base
   attr_reader :compliance_data
   include ZapReport
 
-  helpers do
-    def authed?
-      !session[:user_email].nil?
-    end
-  end
-
   def initialize
     super
     @compliance_data = ComplianceData.new
@@ -53,16 +47,6 @@ class ComplianceViewer < Sinatra::Base
 
   before do
     cache_control :public, :must_revalidate, max_age: 60
-  end
-
-  get '/auth/myusa/callback' do
-    halt(401, 'Not Authorized') unless env['omniauth.auth']
-    session[:user_email] = env['omniauth.auth'].info.email
-    redirect '/'
-  end
-
-  before %r{^(?!\/auth)} do
-    redirect '/auth/myusa' unless authed?
   end
 
   get '/' do

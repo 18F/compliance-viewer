@@ -9,15 +9,6 @@ A small application to access scan results stored in S3.
 
 ## Setup
 
-### MyUSA
-
-Compliance Viewer relies on MyUSA for access control. To set it up:
-
-1. [Create an application in MyUSA.](https://alpha.my.usa.gov/applications/new)
-1. The "Redirect uri" should be `http://localhost:9292/auth/myusa/callback`.
-1. The "Email Address" checkbox under "Identify you by your email address" should be checked.
-1. Take note of the generated "MyUSA Consumer Public Key" and "MyUSA Consumer Secret Key", they are `app_id` and `app_secret` in the ENV.
-
 ### Cloudgov-style
 
 Compliance Viewer uses the [cloudgov-style](https://github.com/18F/cg-style) compiled CSS, images, and fonts.
@@ -31,7 +22,7 @@ Run `npm intall` to install the cloudgov-style assets.
 We provide environment variables via [User Provided Services](https://docs.cloudfoundry.org/devguide/services/user-provided.html). You can set them all interactively.
 
 ```bash
-cf cups compliance-viewer-env -p "app_id, app_secret, cookie_secret, aws_region, results_folder"
+cf cups compliance-viewer-env -p "aws_region, results_folder"
 ```
 
 The `cf env` command can be used to verify that ENV vars have been set. Use `cf uups` to update existing values.

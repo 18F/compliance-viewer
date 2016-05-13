@@ -13,10 +13,7 @@
     {
       "name": "compliance-viewer-env",
       "credentials": {
-        "app_id": "<APP_ID>",
-        "app_secret": "<APP_SECRET>",
         "aws_region": "us-east-1",
-        "cookie_secret": "somelongsecretbutthisisafakeone",
         "results_folder": "results"
       }
     }

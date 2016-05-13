@@ -11,10 +11,7 @@
   "user-provided": [
     {
       "credentials": {
-        "app_id": "000",
-        "app_secret": "234",
         "aws_region": "region",
-        "cookie_secret": "999",
         "results_folder": "results"
       }
     }
