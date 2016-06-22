@@ -9,6 +9,8 @@ A small application to access scan results stored in S3.
 
 ## Setup
 
+Requires Ruby 2.3.1.
+
 ### Cloudgov-style
 
 Compliance Viewer uses the [cloudgov-style](https://github.com/18F/cg-style) compiled CSS, images, and fonts.
