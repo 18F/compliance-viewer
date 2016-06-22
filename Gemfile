@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '2.2.3'
+# the application should support a broader range of versions than this, but
+# https://github.com/rvm/rvm/issues/3705
+ruby '2.3.1'
 
 gem 'sinatra'
 gem 'sinatra-contrib'
