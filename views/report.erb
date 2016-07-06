@@ -34,7 +34,7 @@
       View scan data (.json)
     </a>
   </div>
-  <p class="updated_at">Updated <time class="js-time-human-readable" datetime="<%= project_time.to_datetime %>"><%= project_time %></time></p>
+  <p class="updated_at">Updated <time class="js-time-human-readable" datetime="<%= project_time.to_datetime %>" title="<%= project_time %>"><%= project_time %></time></p>
   <% if alert_count == 0 %>
     <div class="usa-alert usa-alert-success usa-alert-no-icon">
       <p class="usa-alert-text">All scans passing</p>
