@@ -13,11 +13,13 @@
 
   // Format <time> elements
   $('.js-time-human-readable').each(function formatTime() {
-    $(this).text(moment().calendar($(this).attr('datetime'), {
+    var time = $(this).attr('datetime');
+    var displayText = moment(time).calendar({
       sameDay: '[today at] LT',
       lastDay: '[yesterday at] LT',
       lastWeek: '[last] dddd [at] LT'
-    }));
+    });
+    $(this).text(displayText);
   });
 
   // Make tables sortable
