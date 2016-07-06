@@ -14,11 +14,7 @@
   // Format <time> elements
   $('.js-time-human-readable').each(function formatTime() {
     var time = $(this).attr('datetime');
-    var displayText = moment(time).calendar({
-      sameDay: '[today at] LT',
-      lastDay: '[yesterday at] LT',
-      lastWeek: '[last] dddd [at] LT'
-    });
+    var displayText = moment(time).fromNow();
     $(this).text(displayText);
   });
 
