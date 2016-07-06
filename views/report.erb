@@ -10,7 +10,7 @@
       <% else %>
         Scans returned <%= alert_count %> error<% if alert_count > 1 %>s<% end %>
       <% end %>
-      <span class="usa-alert__updated-at">Updated <time class="js-time-human-readable" datetime="<%= project_time %>"><%= project_time %></time></span>
+      <span class="usa-alert__updated-at">Updated <time class="js-time-human-readable" datetime="<%= project_time %>" title="<%= project_time %>"><%= project_time %></time></span>
     </p>
   </div>
 </div>
