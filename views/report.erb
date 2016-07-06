@@ -10,7 +10,7 @@
       <% else %>
         Scans returned <%= alert_count %> error<% if alert_count > 1 %>s<% end %>
       <% end %>
-      <span class="usa-alert__updated-at">Updated <time class="js-time-human-readable" datetime="<%= project_time %>"><%= project_time %></time></span>
+      <span class="usa-alert__updated-at">Updated <time class="js-time-human-readable" datetime="<%= project_time.to_datetime %>" title="<%= project_time %>"><%= project_time %></time></span>
     </p>
   </div>
 </div>
@@ -19,7 +19,7 @@
 <div class="getting_started">
   <h2>Getting Started</h2>
   <p>
-    When it comes down to it, compliance is a  conversation. To ensure that the conversation goes smoothly, your team should start the compliance process at the outset of your project, not right before you ship. Here are the steps you need to take to ensure your project is compliant:
+    When it comes down to it, compliance is a conversation. To ensure that the conversation goes smoothly, your team should start the compliance process at the outset of your project, not right before you ship. Here are the steps you need to take to ensure your project is compliant:
   </p>
   <ul>
     <li><a href="https://pages.18f.gov/before-you-ship/" title="Before You Ship">Read the &quot;Before You Ship&quot; ATO walk through</a></li>
@@ -34,7 +34,7 @@
       View scan data (.json)
     </a>
   </div>
-  <p class="updated_at">Updated <time class="js-time-human-readable" datetime="<%= project_time %>"><%= project_time %></time></p>
+  <p class="updated_at">Updated <time class="js-time-human-readable" datetime="<%= project_time.to_datetime %>" title="<%= project_time %>"><%= project_time %></time></p>
   <% if alert_count == 0 %>
     <div class="usa-alert usa-alert-success usa-alert-no-icon">
       <p class="usa-alert-text">All scans passing</p>
