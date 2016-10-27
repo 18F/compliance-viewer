@@ -2,7 +2,7 @@
   "private": true,
   "main": "index.js",
   "dependencies": {
-    "cloudgov-style": "~0.5.0"
+    "cloudgov-style": "~1.4.2"
   },
   "devDependencies": {
     "eslint": "^2.9.0",

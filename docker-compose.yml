@@ -1,0 +1,8 @@
+web:
+  build: .
+  volumes:
+    - .:/app
+    - node_modules:/app/node_modules
+  command: rackup
+  ports:
+    - "9292:9292"
