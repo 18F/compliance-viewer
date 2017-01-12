@@ -9,7 +9,7 @@ A small application to access scan results stored in S3. The data is generated b
 
 ## Setup
 
-Requires Ruby 2.3.1.
+Requires Ruby 2.3+.
 
 ### Cloudgov-style
 

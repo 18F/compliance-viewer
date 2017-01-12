@@ -1,9 +1,5 @@
 source 'https://rubygems.org'
 
-# the application should support a broader range of versions than this, but
-# https://github.com/rvm/rvm/issues/3705
-ruby '2.3.1'
-
 gem 'aws-sdk'
 gem 'cfenv'
 gem 'parallel'
