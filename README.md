@@ -49,6 +49,8 @@ User Provided Services expose values via CloudFoundry's `VCAP_SERVICES` environm
 
 ### On cloud.gov
 
+Set up [Concourse CI Compliance Testing](https://github.com/18F/concourse-compliance-testing) first.
+
 The 18F instance of Compliance Viewer is deployed to cloud.gov in the `cf` organization and `toolkit` space. If you are an 18F staff member and don't have access, ask someone in #cloud-gov-support to run:
 
 ```bash
@@ -59,8 +61,8 @@ Compliance Viewer uses an S3 bucket provided by cloud.gov. After pushing the app
 
 ```bash
 cf target -o cf -s toolkit
-cf create-service s3 basic s3-compliance-toolkit
-cf bind-service compliance-viewer s3-compliance-toolkit
+cf create-service s3 basic reports
+cf bind-service compliance-viewer reports
 ```
 
 Compliance Viewer relies on S3 bucket versioning. It can be enabled via the [AWS CLI](https://aws.amazon.com/cli/) using:
