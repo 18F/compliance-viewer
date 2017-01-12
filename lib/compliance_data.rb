@@ -7,7 +7,7 @@ class ComplianceData
 
   def initialize
     @bucket = Aws::S3::Bucket.new(s3_credentials.bucket,
-      region: user_credentials.aws_region,
+      region: s3_credentials.region,
       credentials: Aws::Credentials.new(s3_credentials.access_key_id, s3_credentials.secret_access_key))
   end
 

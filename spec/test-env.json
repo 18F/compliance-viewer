@@ -4,14 +4,14 @@
       "credentials": {
         "access_key_id": "123",
         "bucket": "bucket22",
-        "secret_access_key": "234"
+        "secret_access_key": "234",
+        "region": "us-east-1"
       }
     }
   ],
   "user-provided": [
     {
       "credentials": {
-        "aws_region": "region",
         "results_folder": "results"
       }
     }
