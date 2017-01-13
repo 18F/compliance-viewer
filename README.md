@@ -9,25 +9,11 @@ A small application to access scan results stored in S3. The data is generated b
 
 ## Setup
 
+### Local
+
 Requires Ruby 2.3+.
 
-### ENV
-
-#### Production
-
-We provide environment variables via [User Provided Services](https://docs.cloudfoundry.org/devguide/services/user-provided.html). You can set them all interactively.
-
-```bash
-cf cups compliance-viewer-env -p "results_folder"
-```
-
-The `cf env` command can be used to verify that ENV vars have been set. Use `cf uups` to update existing values.
-
-#### Locally
-
-User Provided Services expose values via CloudFoundry's `VCAP_SERVICES` environment variable, in JSON. In development we mimic this.
-
-1. Run
+1. User Provided Services expose values via CloudFoundry's `VCAP_SERVICES` environment variable, in JSON. In development we mimic this. Run
 
     ```bash
     cp env/example.json env/development.json
@@ -42,13 +28,27 @@ User Provided Services expose values via CloudFoundry's `VCAP_SERVICES` environm
     rackup
     ```
 
-### On cloud.gov
+### cloud.gov
+
+#### ENV
+
+We provide environment variables via [User Provided Services](https://docs.cloudfoundry.org/devguide/services/user-provided.html). You can set them all interactively.
+
+```bash
+cf cups compliance-viewer-env -p "results_folder"
+```
+
+The `cf env` command can be used to verify that ENV vars have been set. Use `cf uups` to update existing values.
+
+#### Org
 
 The 18F instance of Compliance Viewer is deployed to cloud.gov in the `cloud-gov-compliance-toolkit` organization. If you are an 18F staff member and don't have access, ask someone in #cloud-gov-support to run:
 
 ```bash
 cf set-org-role <your email> cloud-gov-compliance-toolkit OrgManager
 ```
+
+#### S3
 
 Compliance Viewer uses an S3 bucket provided by cloud.gov. First, create the S3 bucket:
 
@@ -68,6 +68,8 @@ or checked via:
 ```bash
 aws s3api get-bucket-versioning --bucket BUCKET_NAME
 ```
+
+#### Deploy
 
 Finally, `cf push` to launch the application.
 
