@@ -11,12 +11,6 @@ A small application to access scan results stored in S3. The data is generated b
 
 Requires Ruby 2.3+.
 
-### Cloudgov-style
-
-Compliance Viewer uses the [cloudgov-style](https://github.com/18F/cg-style) compiled CSS, images, and fonts.
-
-Run `npm intall` to install the cloudgov-style assets.
-
 ### ENV
 
 #### Production
@@ -43,26 +37,24 @@ User Provided Services expose values via CloudFoundry's `VCAP_SERVICES` environm
 1. Run the application with
 
     ```bash
+    npm install
     bundle
     rackup
     ```
 
 ### On cloud.gov
 
-Set up [Concourse CI Compliance Testing](https://github.com/18F/concourse-compliance-testing) first.
-
-The 18F instance of Compliance Viewer is deployed to cloud.gov in the `cf` organization and `toolkit` space. If you are an 18F staff member and don't have access, ask someone in #cloud-gov-support to run:
+The 18F instance of Compliance Viewer is deployed to cloud.gov in the `cloud-gov-compliance-toolkit` organization. If you are an 18F staff member and don't have access, ask someone in #cloud-gov-support to run:
 
 ```bash
-cf set-space-role <your email> cf toolkit SpaceDeveloper
+cf set-org-role <your email> cloud-gov-compliance-toolkit OrgManager
 ```
 
-Compliance Viewer uses an S3 bucket provided by cloud.gov. After pushing the application, you can create the S3 bucket with:
+Compliance Viewer uses an S3 bucket provided by cloud.gov. First, create the S3 bucket:
 
 ```bash
-cf target -o cf -s toolkit
+cf target -o cloud-gov-compliance-toolkit -s prod
 cf create-service s3 basic reports
-cf bind-service compliance-viewer reports
 ```
 
 Compliance Viewer relies on S3 bucket versioning. It can be enabled via the [AWS CLI](https://aws.amazon.com/cli/) using:
@@ -76,6 +68,8 @@ or checked via:
 ```bash
 aws s3api get-bucket-versioning --bucket BUCKET_NAME
 ```
+
+Finally, `cf push` to launch the application.
 
 ### Public domain
 
