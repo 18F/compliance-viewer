@@ -1,11 +1,12 @@
 {
   "s3": [
     {
-      "name": "s3-compliance-toolkit",
+      "name": "reports",
       "credentials": {
         "access_key_id": "<AWS_ACCESS_KEY>",
         "bucket": "<AWS_BUCKET>",
-        "secret_access_key": "<AWS_SECRET_KEY>"
+        "secret_access_key": "<AWS_SECRET_KEY>",
+        "region": "us-gov-west-1"
       }
     }
   ],
@@ -13,7 +14,6 @@
     {
       "name": "compliance-viewer-env",
       "credentials": {
-        "aws_region": "us-east-1",
         "results_folder": "results"
       }
     }

@@ -9,31 +9,11 @@ A small application to access scan results stored in S3. The data is generated b
 
 ## Setup
 
-Requires Ruby 2.3.1.
+### Local
 
-### Cloudgov-style
+Requires Ruby 2.3+.
 
-Compliance Viewer uses the [cloudgov-style](https://github.com/18F/cg-style) compiled CSS, images, and fonts.
-
-Run `npm intall` to install the cloudgov-style assets.
-
-### ENV
-
-#### Production
-
-We provide environment variables via [User Provided Services](https://docs.cloudfoundry.org/devguide/services/user-provided.html). You can set them all interactively.
-
-```bash
-cf cups compliance-viewer-env -p "aws_region, results_folder"
-```
-
-The `cf env` command can be used to verify that ENV vars have been set. Use `cf uups` to update existing values.
-
-#### Locally
-
-User Provided Services expose values via CloudFoundry's `VCAP_SERVICES` environment variable, in JSON. In development we mimic this.
-
-1. Run
+1. User Provided Services expose values via CloudFoundry's `VCAP_SERVICES` environment variable, in JSON. In development we mimic this. Run
 
     ```bash
     cp env/example.json env/development.json
@@ -43,24 +23,38 @@ User Provided Services expose values via CloudFoundry's `VCAP_SERVICES` environm
 1. Run the application with
 
     ```bash
+    npm install
     bundle
     rackup
     ```
 
-### On cloud.gov
+### cloud.gov
 
-The 18F instance of Compliance Viewer is deployed to cloud.gov in the `cf` organization and `toolkit` space. If you are an 18F staff member and don't have access, ask someone in #cloud-gov-support to run:
+#### ENV
+
+We provide environment variables via [User Provided Services](https://docs.cloudfoundry.org/devguide/services/user-provided.html). You can set them all interactively.
 
 ```bash
-cf set-space-role <your email> cf toolkit SpaceDeveloper
+cf cups compliance-viewer-env -p "results_folder"
 ```
 
-Compliance Viewer uses an S3 bucket provided by cloud.gov. After pushing the application, you can create the S3 bucket with:
+The `cf env` command can be used to verify that ENV vars have been set. Use `cf uups` to update existing values.
+
+#### Org
+
+The 18F instance of Compliance Viewer is deployed to cloud.gov in the `cloud-gov-compliance-toolkit` organization. If you are an 18F staff member and don't have access, ask someone in #cloud-gov-support to run:
 
 ```bash
-cf target -o cf -s toolkit
-cf create-service s3 basic s3-compliance-toolkit
-cf bind-service compliance-viewer s3-compliance-toolkit
+cf set-org-role <your email> cloud-gov-compliance-toolkit OrgManager
+```
+
+#### S3
+
+Compliance Viewer uses an S3 bucket provided by cloud.gov. First, create the S3 bucket:
+
+```bash
+cf target -o cloud-gov-compliance-toolkit -s prod
+cf create-service s3 basic reports
 ```
 
 Compliance Viewer relies on S3 bucket versioning. It can be enabled via the [AWS CLI](https://aws.amazon.com/cli/) using:
@@ -74,6 +68,10 @@ or checked via:
 ```bash
 aws s3api get-bucket-versioning --bucket BUCKET_NAME
 ```
+
+#### Deploy
+
+Finally, `cf push` to launch the application.
 
 ### Public domain
 

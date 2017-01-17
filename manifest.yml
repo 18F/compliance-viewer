@@ -4,10 +4,7 @@ applications:
 - name: compliance-viewer
   memory: 512M
   instances: 1
-  domain: 18f.gov
-  host: compliance-viewer
   services:
-    - s3-compliance-toolkit
+    - reports
     - compliance-viewer-env # This service is User Provided, and functions as ENV vars.
   command: rackup -p $PORT -E production
-
