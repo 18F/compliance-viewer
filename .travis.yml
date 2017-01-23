@@ -15,12 +15,12 @@ before_install:
 deploy:
   edge: true
   provider: cloudfoundry
-  api: https://api.cloud.gov
-  username: cf_toolkit_deployer
+  api: https://api.fr.cloud.gov
+  username: e7665c31-fac3-49bb-9842-4b18ad18e429
   password:
-    secure: "24M4FScTPzdK04XKkOLeY1wXeJptTx0FeB6jVE7Ar8Xo1iWhbVldEnuf/KNPu5OO602FroP2yBJN+zawC36wNW2Z/XRlOOUdmoIdLHu3QKK2iRz80utBr6Q4eh0xAE48rBgQecXcKO701JroKRyFbeuQj2shlTuNRJih+toayoD2xmV7SKO0z2aygmb1QMV1tVP9UEwApbbH6LhpfAV8DIXxQeQrh9BXuFiYZiReFDO+DqVBKHGraAwVy4U4hL0kJbMxKokWTCj6E3OjIm2EMY9vK9Hq3Dm+YxrS/LAc6DxAhSHrUCOBKYl76MCpsnv/MFFhlp1993ZlOpH06aBvpc9htqYo/cd66vaqkzkAXi8l6QivCz5Fw+9nr+e6pngQ6036+pOJ7DJxTIwPHZH+sWITgzbijV55gJm80uF9KYt9d3I3OzHpbAfOJqwjbBHr5PLAwMFQl0szvOk/zCTTtragSUYSo3+GdFIlhUKqNpHo1EGjXbAM4QEsNkqP7AZUb/uQ2AYrUqXylCpAZwEt2FDS0Df9t7l/rvQYcIVtYhAGOiPXMtqZ6gEsjFd18nWvIk3zwy1ZGsOTI+Dt8Z3yX1V/RX5y8lyTld4PZk+pzoss+B51/rgju3oY64vFIq0euNIXP8KoaC1COLZkhwB2Lgshz3X8WR91NUltxx38hIY="
-  organization: cf
-  space: toolkit
+    secure: "pLWZFLOBf/Rc2lJKzIwN3YFAhBBxQqeWLgevcxRbYRy04NwDpbCwtu6pveREuJDbGYy4LC5p3SvVEl3sS36SPuaaQ6MMO69ZhNWYnApsfDh075+i1Me/gynD0/63UJO2cEGcFnLHmVrnCNzbDCHoguygEnIV+GGCmxSjXw3CswnhQRCO0zwThFNLaV3JMzvUJGELKUr+jY/sERxCKLGkX4coffdx3zUwZFBar+/cfnx+WsgkFsHbU8d5NOZmOEwCYC9x5Q0jjBrNt7tRcfr1RJexrWJCjdCBPZqVaqaRg5EdVIs5olTMWMjkRGZYiZHBATZD0+U2TWnaSlSS0hzGxdz9s01AGeKKd8BC//sm1R/2YFGPZCvJBIvdJ5vi02b6jtWLUdVtwx32Cd/p1bD+t2az/q7vpsqOFTOnXd3Mn31bxdvLZ6BVJROS/HvHHPbTCDZyt2k/NBWLrqLTqbOzt6Ae4Uqdi91r75Y4CC9LPMMOO6ToHV11o8E/6cIebVU7iH9vpcK6LqR/owu0u6bYOl2q3baUv+BeJZmp+cOOm1LCyMninHR/niSN8VGzljCK44cshi363S11oL35E2jxfv8rUag2qaUffq3Oxw1l52FbPKgyxbNchsOFdU+Tx3OCswxDyW5yxIbs5Ivk8jzS5AeELEdnVUs7h4shMOVs67E="
+  organization: cloud-gov-compliance-toolkit
+  space: prod
   on:
     repo: 18F/compliance-viewer
     branch: master
