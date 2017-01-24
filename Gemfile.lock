@@ -32,6 +32,7 @@ GEM
     mocha (1.1.0)
       metaclass (~> 0.0.1)
     multi_json (1.12.1)
+    newrelic_rpm (3.18.0.329)
     parallel (1.9.0)
     parser (2.3.1.2)
       ast (~> 2.2)
@@ -106,6 +107,7 @@ DEPENDENCIES
   cfenv
   codeclimate-test-reporter
   mocha
+  newrelic_rpm
   parallel
   rspec
   rubocop
