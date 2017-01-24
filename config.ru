@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'cfenv'
+require 'newrelic_rpm'
 require 'sprockets'
 require './app'
 

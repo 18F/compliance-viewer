@@ -35,7 +35,7 @@ Requires Ruby 2.3+.
 We provide environment variables via [User Provided Services](https://docs.cloudfoundry.org/devguide/services/user-provided.html). You can set them all interactively.
 
 ```bash
-cf cups compliance-viewer-env -p "results_folder"
+cf cups compliance-viewer-env -p "results_folder, new_relic_license_key"
 ```
 
 The `cf env` command can be used to verify that ENV vars have been set. Use `cf uups` to update existing values.

@@ -12,7 +12,8 @@
   "user-provided": [
     {
       "credentials": {
-        "results_folder": "results"
+        "results_folder": "results",
+        "new_relic_license_key": "1234-abcd"
       }
     }
   ]

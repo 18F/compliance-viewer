@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'aws-sdk'
 gem 'cfenv'
+gem 'newrelic_rpm'
 gem 'parallel'
 gem 'sass'
 gem 'sinatra-contrib'
