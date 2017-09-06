@@ -1,16 +1,29 @@
 version: 2
 jobs:
-  test:
+  npm:
     docker:
-      - image: starefossen/ruby-node:2-8
+      - image: node:8
     steps:
       - checkout
       - run:
-          name: Install Ruby dependencies
-          command: bundle install
-      - run:
           name: Install NodeJS dependencies
           command: npm install --production
+      # Ruby buildpack doesn't install NPM packages, so need to send to the deployment job so they are uploaded
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+
+  test:
+    docker:
+      - image: ruby:2
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install Ruby dependencies
+          command: bundle install
 
       # https://docs.codeclimate.com/docs/circle-ci-test-coverage-example#section-circleci-20
       - run:
@@ -31,12 +44,6 @@ jobs:
           name: Submit test report to Code Climate
           command: ./cc-test-reporter after-build --exit-code $?
 
-      # Ruby buildpack doesn't install NPM packages, so need to send to the deployment job so they are uploaded
-      - persist_to_workspace:
-          root: .
-          paths:
-            - node_modules
-
   deploy:
     docker:
       - image: adborden/cloud-foundry-cli
@@ -54,7 +61,10 @@ workflows:
   version: 2
   test_and_deploy:
     jobs:
-      - test
+      - npm
+      - test:
+          requires:
+            - npm
       - deploy:
           requires:
             - test
