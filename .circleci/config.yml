@@ -2,12 +2,15 @@ version: 2
 jobs:
   build:
     docker:
-      - image: ruby:2
+      - image: starefossen/ruby-node:2-8
     steps:
       - checkout
       - run:
           name: Install Ruby dependencies
           command: bundle install
+      - run:
+          name: Install NodeJS dependencies
+          command: npm install --production
 
       # https://docs.codeclimate.com/docs/circle-ci-test-coverage-example#section-circleci-20
       - run:
