@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  test:
     docker:
       - image: starefossen/ruby-node:2-8
     steps:
@@ -31,6 +31,11 @@ jobs:
           name: Submit test report to Code Climate
           command: ./cc-test-reporter after-build --exit-code $?
 
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+
   deploy:
     docker:
       - image: adborden/cloud-foundry-cli
@@ -38,6 +43,8 @@ jobs:
           CF_API: https://api.fr.cloud.gov
     steps:
       - checkout
+      - attach_workspace:
+          at: .
       - deploy:
           name: cf push
           command: cf_deploy.sh compliance-viewer cloud-gov-compliance-toolkit prod
@@ -46,7 +53,7 @@ workflows:
   version: 2
   test_and_deploy:
     jobs:
-      - build
+      - test
       - deploy:
           requires:
-            - build
+            - test
