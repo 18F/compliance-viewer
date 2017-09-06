@@ -31,6 +31,7 @@ jobs:
           name: Submit test report to Code Climate
           command: ./cc-test-reporter after-build --exit-code $?
 
+      # Ruby buildpack doesn't install NPM packages, so need to send to the deployment job so they are uploaded
       - persist_to_workspace:
           root: .
           paths:
