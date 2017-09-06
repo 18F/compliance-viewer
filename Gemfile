@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'aws-sdk'
+gem 'aws-sdk', '~> 2.0'
 gem 'cfenv'
 gem 'newrelic_rpm'
 gem 'parallel'
@@ -16,10 +16,10 @@ group :test, :development do
   gem 'mocha'
   gem 'rspec'
   gem 'rubocop'
-  gem 'simplecov'
 end
 
 group :test do
-  gem 'codeclimate-test-reporter', require: nil
+  gem 'rack-test'
+  gem 'simplecov', require: false
   gem 'webmock'
 end
