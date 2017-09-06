@@ -5,5 +5,25 @@ jobs:
       - image: ruby:2
     steps:
       - checkout
-      - run: bundle install
-      - run: bundle exec rspec
+      - run:
+          name: Install Ruby dependencies
+          command: bundle install
+
+      # https://docs.codeclimate.com/docs/circle-ci-test-coverage-example#section-circleci-20
+      - run:
+          name: Install Code Climate test coverage reporter
+          command: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      - run:
+          name: Make Code Climate test coverage reporter executable
+          command: chmod +x ./cc-test-reporter
+      - run:
+          name: Set up Code Climate test coverage reporter
+          command: ./cc-test-reporter before-build
+
+      - run:
+          name: Run tests
+          command: bundle exec rspec
+
+      - run:
+          name: Submit test report to Code Climate
+          command: ./cc-test-reporter after-build --exit-code $?
