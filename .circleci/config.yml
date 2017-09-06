@@ -30,3 +30,23 @@ jobs:
       - run:
           name: Submit test report to Code Climate
           command: ./cc-test-reporter after-build --exit-code $?
+
+  deploy:
+    docker:
+      - image: adborden/cloud-foundry-cli
+        environment:
+          CF_API: https://api.fr.cloud.gov
+    steps:
+      - checkout
+      - deploy:
+          name: cf push
+          command: cf_deploy.sh compliance-viewer cloud-gov-compliance-toolkit prod
+
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
