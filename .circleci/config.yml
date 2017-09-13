@@ -46,7 +46,7 @@ jobs:
 
   deploy:
     docker:
-      - image: adborden/cloud-foundry-cli
+      - image: 18fgsa/cloud-foundry-cli
         environment:
           CF_API: https://api.fr.cloud.gov
     steps:
