@@ -5,3 +5,5 @@ env/development.json
 .gem
 public/vendor
 node_modules
+coverage
+log

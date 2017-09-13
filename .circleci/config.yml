@@ -1,0 +1,73 @@
+version: 2
+jobs:
+  npm:
+    docker:
+      - image: node:8
+    steps:
+      - checkout
+      - run:
+          name: Install NodeJS dependencies
+          command: npm install --production
+      # Ruby buildpack doesn't install NPM packages, so need to send to the deployment job so they are uploaded
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+
+  test:
+    docker:
+      - image: ruby:2
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install Ruby dependencies
+          command: bundle install
+
+      # https://docs.codeclimate.com/docs/circle-ci-test-coverage-example#section-circleci-20
+      - run:
+          name: Install Code Climate test coverage reporter
+          command: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      - run:
+          name: Make Code Climate test coverage reporter executable
+          command: chmod +x ./cc-test-reporter
+      - run:
+          name: Set up Code Climate test coverage reporter
+          command: ./cc-test-reporter before-build
+
+      - run:
+          name: Run tests
+          command: bundle exec rspec
+
+      - run:
+          name: Submit test report to Code Climate
+          command: ./cc-test-reporter after-build --exit-code $?
+
+  deploy:
+    docker:
+      - image: 18fgsa/cloud-foundry-cli
+        environment:
+          CF_API: https://api.fr.cloud.gov
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - deploy:
+          name: cf push
+          command: cf_deploy.sh compliance-viewer cloud-gov-compliance-toolkit prod
+
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - npm
+      - test:
+          requires:
+            - npm
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
